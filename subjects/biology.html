@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology - Study Notes Hub</title>
+    <meta name="description" content="Comprehensive biology study notes and cheat sheets for grades 7-11. Learn about cells, genetics, human anatomy and more.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Subject-specific styles */
+        .subject-header {
+            background: linear-gradient(rgba(106, 141, 63, 0.9), rgba(106, 141, 63, 0.8)), url('https://source.unsplash.com/random/1200x600/?biology') no-repeat center center/cover;
+            color: #fff;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .study-note {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .study-note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .study-note-header h2 {
+            color: var(--biology-color);
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .study-note-content {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .formula {
+            background-color: #f0f4f8;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--biology-color);
+            margin: var(--spacing-md) 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .example h4 {
+            color: var(--biology-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .bookmark-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-lg);
+            color: var(--biology-color);
+        }
+        
+        .pdf-download-container {
+            text-align: right;
+            margin-top: var(--spacing-md);
+        }
+        
+        .pdf-download-btn {
+            font-size: var(--font-sm);
+        }
+        
+        .premium-locked {
+            position: relative;
+            background-color: #f0f0f0;
+            color: #888;
+        }
+        
+        .premium-locked:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .premium-locked .fa-crown {
+            color: var(--premium-color);
+            margin-left: var(--spacing-xs);
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .notification {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success i {
+            color: #4caf50;
+        }
+        
+        .notification.error i {
+            color: #f44336;
+        }
+        
+        .notification i {
+            margin-right: var(--spacing-sm);
+            font-size: var(--font-lg);
+        }
+        
+        /* Biology-specific styles */
+        .cell-diagram {
+            max-width: 100%;
+            margin: var(--spacing-md) 0;
+            padding: var(--spacing-md);
+            background-color: #f8fbf4;
+            border: 1px solid #dce6d0;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cell-diagram img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .cell-diagram .caption {
+            margin-top: var(--spacing-sm);
+            font-style: italic;
+            color: #666;
+            text-align: center;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--biology-color);
+            color: white;
+            padding: var(--spacing-sm);
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-sm);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="math.html" class="math-color">Mathematics</a></li>
+                            <li><a href="physics.html" class="physics-color">Physics</a></li>
+                            <li><a href="chemistry.html" class="chemistry-color">Chemistry</a></li>
+                            <li><a href="biology.html" class="biology-color active">Biology</a></li>
+                            <li><a href="history.html" class="history-color">History</a></li>
+                            <li><a href="literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#grades">Grades 7-11</a></li>
+                    <li><a href="../premium/index.html">Premium Content</a></li>
+                    <li><a href="#" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="subject-header">
+        <div class="container">
+            <h1>Biology</h1>
+            <p>Study notes and cheat sheets for cell biology, genetics, human anatomy and more</p>
+        </div>
+    </div>
+
+    <section class="subject-page">
+        <div class="container">
+            <div class="grade-selector">
+                <h2>Select Grade Level</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="grade7">Grade 7</button>
+                    <button class="tab-btn" data-target="grade8">Grade 8</button>
+                    <button class="tab-btn" data-target="grade9">Grade 9</button>
+                    <button class="tab-btn" data-target="grade10">Grade 10</button>
+                    <button class="tab-btn" data-target="grade11">Grade 11</button>
+                </div>
+            </div>
+
+            <div id="grade7" class="grade-content active">
+                <h2>Grade 7 Biology Notes</h2>
+                
+                <div id="g7-cells" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Cell Structure</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Cells</h3>
+                        <p>The cell is the basic structural and functional unit of all living organisms. Cells are the smallest units of life that can replicate independently. All organisms are composed of one or more cells.</p>
+                        
+                        <p>There are two main types of cells:</p>
+                        <ul>
+                            <li><strong>Prokaryotic cells</strong>: Simpler, smaller cells without a nucleus or membrane-bound organelles (e.g., bacteria)</li>
+                            <li><strong>Eukaryotic cells</strong>: More complex cells with a nucleus and various membrane-bound organelles (e.g., plant and animal cells)</li>
+                        </ul>
+                        
+                        <h3>Cell Theory</h3>
+                        <ol>
+                            <li>All living organisms are composed of one or more cells.</li>
+                            <li>The cell is the basic unit of structure, function, and organization in all organisms.</li>
+                            <li>All cells come from pre-existing cells.</li>
+                        </ol>
+                        
+                        <h3>Animal Cell Structure</h3>
+                        <p>Animal cells are eukaryotic cells with the following main components:</p>
+                        
+                        <ul>
+                            <li><strong>Cell membrane</strong>: Surrounds the cell and controls what enters and leaves the cell</li>
+                            <li><strong>Cytoplasm</strong>: Gel-like substance where organelles are suspended</li>
+                            <li><strong>Nucleus</strong>: Contains DNA and controls cell activities</li>
+                            <li><strong>Mitochondria</strong>: Produce energy through cellular respiration</li>
+                            <li><strong>Endoplasmic reticulum</strong>: Network of membranes involved in protein and lipid synthesis</li>
+                            <li><strong>Golgi apparatus</strong>: Modifies, packages, and distributes proteins</li>
+                            <li><strong>Lysosomes</strong>: Contain digestive enzymes to break down waste materials and cellular debris</li>
+                            <li><strong>Ribosomes</strong>: Sites of protein synthesis</li>
+                        </ul>
+                        
+                        <div class="cell-diagram">
+                            <svg width="400" height="300" viewBox="0 0 400 300">
+                                <!-- Cell membrane -->
+                                <ellipse cx="200" cy="150" rx="190" ry="140" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+                                
+                                <!-- Nucleus -->
+                                <circle cx="200" cy="150" r="50" fill="#d3e8d5" stroke="#333" stroke-width="2"/>
+                                <circle cx="200" cy="150" r="45" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+                                <text x="200" y="150" text-anchor="middle" alignment-baseline="middle" font-size="12">Nucleus</text>
+                                
+                                <!-- Mitochondria -->
+                                <ellipse cx="120" cy="100" rx="30" ry="15" fill="#ffcccc" stroke="#333" stroke-width="2"/>
+                                <ellipse cx="120" cy="100" rx="25" ry="10" fill="none" stroke="#333" stroke-width="1"/>
+                                <text x="120" y="100" text-anchor="middle" alignment-baseline="middle" font-size="9">Mitochondria</text>
+                                
+                                <!-- Golgi apparatus -->
+                                <path d="M280,120 Q290,130 280,140 Q270,150 280,160 Q290,170 280,180" fill="none" stroke="#333" stroke-width="2"/>
+                                <path d="M290,120 Q300,130 290,140 Q280,150 290,160 Q300,170 290,180" fill="none" stroke="#333" stroke-width="2"/>
+                                <text x="310" y="150" text-anchor="middle" alignment-baseline="middle" font-size="10">Golgi</text>
+                                
+                                <!-- Lysosomes -->
+                                <circle cx="150" cy="220" r="15" fill="#e6ccff" stroke="#333" stroke-width="2"/>
+                                <text x="150" y="220" text-anchor="middle" alignment-baseline="middle" font-size="8">Lysosome</text>
+                                
+                                <!-- Ribosomes -->
+                                <circle cx="250" cy="80" r="3" fill="#333"/>
+                                <circle cx="260" cy="85" r="3" fill="#333"/>
+                                <circle cx="270" cy="75" r="3" fill="#333"/>
+                                <circle cx="255" cy="70" r="3" fill="#333"/>
+                                <text x="270" cy="60" text-anchor="middle" alignment-baseline="middle" font-size="10">Ribosomes</text>
+                                
+                                <!-- ER -->
+                                <path d="M130,180 Q140,190 150,180 Q160,170 170,180 Q180,190 190,180" fill="none" stroke="#333" stroke-width="2"/>
+                                <path d="M130,190 Q140,200 150,190 Q160,180 170,190 Q180,200 190,190" fill="none" stroke="#333" stroke-width="2"/>
+                                <text x="160" y="210" text-anchor="middle" alignment-baseline="middle" font-size="10">ER</text>
+                            </svg>
+                            <div class="caption">Simplified diagram of an animal cell</div>
+                        </div>
+                        
+                        <h3>Plant Cell Structure</h3>
+                        <p>Plant cells have all the components of animal cells, plus the following additional structures:</p>
+                        
+                        <ul>
+                            <li><strong>Cell wall</strong>: Rigid outer layer that provides support and protection</li>
+                            <li><strong>Chloroplasts</strong>: Contain chlorophyll and are the sites of photosynthesis</li>
+                            <li><strong>Central vacuole</strong>: Large fluid-filled sac that stores water and nutrients</li>
+                        </ul>
+                        
+                        <h3>Comparison of Plant and Animal Cells</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Feature</th>
+                                <th>Animal Cell</th>
+                                <th>Plant Cell</th>
+                            </tr>
+                            <tr>
+                                <td>Cell Wall</td>
+                                <td>Absent</td>
+                                <td>Present (made of cellulose)</td>
+                            </tr>
+                            <tr>
+                                <td>Cell Shape</td>
+                                <td>Usually irregular</td>
+                                <td>Usually rectangular or cube-shaped</td>
+                            </tr>
+                            <tr>
+                                <td>Vacuoles</td>
+                                <td>Small or absent</td>
+                                <td>Large central vacuole</td>
+                            </tr>
+                            <tr>
+                                <td>Chloroplasts</td>
+                                <td>Absent</td>
+                                <td>Present</td>
+                            </tr>
+                            <tr>
+                                <td>Centrioles</td>
+                                <td>Present</td>
+                                <td>Absent in most plant cells</td>
+                            </tr>
+                            <tr>
+                                <td>Energy Storage</td>
+                                <td>Glycogen</td>
+                                <td>Starch</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>How do plant and animal cells differ in terms of energy production and storage?</p>
+                            <p><strong>Energy Production:</strong> Both plant and animal cells have mitochondria for cellular respiration to produce ATP. However, plant cells also have chloroplasts, which allow them to produce glucose through photosynthesis using sunlight, carbon dioxide, and water.</p>
+                            <p><strong>Energy Storage:</strong> Plant cells store energy as starch, whereas animal cells store energy as glycogen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade8" class="grade-content">
+                <h2>Grade 8 Biology Notes</h2>
+                
+                <div id="g8-systems" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Body Systems</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Human Body Systems</h3>
+                        <p>The human body is organized into different levels: cells, tissues, organs, and organ systems. Each organ system performs specific functions and works with other systems to maintain homeostasis (stable internal conditions).</p>
+                        
+                        <h3>Digestive System</h3>
+                        <p>The digestive system breaks down food into nutrients that can be absorbed and used by the body.</p>
+                        
+                        <p><strong>Major organs and their functions:</strong></p>
+                        <ul>
+                            <li><strong>Mouth</strong>: Mechanical breakdown of food (chewing) and chemical digestion begins (salivary amylase)</li>
+                            <li><strong>Esophagus</strong>: Transports food to the stomach</li>
+                            <li><strong>Stomach</strong>: Stores food, mixes it with digestive juices, breaks down proteins</li>
+                            <li><strong>Small intestine</strong>: Main site of digestion and absorption of nutrients</li>
+                            <li><strong>Large intestine</strong>: Absorbs water and electrolytes, forms feces</li>
+                            <li><strong>Liver</strong>: Produces bile for fat digestion, detoxifies harmful substances, stores nutrients</li>
+                            <li><strong>Pancreas</strong>: Produces digestive enzymes and hormones (insulin, glucagon)</li>
+                            <li><strong>Gallbladder</strong>: Stores and concentrates bile from the liver</li>
+                        </ul>
+                        
+                        <h3>Respiratory System</h3>
+                        <p>The respiratory system brings oxygen into the body and removes carbon dioxide.</p>
+                        
+                        <p><strong>Major organs and their functions:</strong></p>
+                        <ul>
+                            <li><strong>Nose and nasal cavity</strong>: Filters, warms, and humidifies air</li>
+                            <li><strong>Pharynx (throat)</strong>: Passageway for air and food</li>
+                            <li><strong>Larynx (voice box)</strong>: Contains vocal cords for speech</li>
+                            <li><strong>Trachea (windpipe)</strong>: Carries air to the lungs</li>
+                            <li><strong>Bronchi and bronchioles</strong>: Branch into smaller airways</li>
+                            <li><strong>Alveoli</strong>: Tiny air sacs where gas exchange occurs</li>
+                            <li><strong>Lungs</strong>: Main organs of respiration</li>
+                            <li><strong>Diaphragm</strong>: Muscle that helps in breathing</li>
+                        </ul>
+                        
+                        <p><strong>Gas exchange:</strong> Oxygen diffuses from the alveoli into the bloodstream, while carbon dioxide diffuses from the blood into the alveoli to be exhaled.</p>
+                        
+                        <h3>Circulatory System</h3>
+                        <p>The circulatory system transports oxygen, nutrients, hormones, and waste products throughout the body.</p>
+                        
+                        <p><strong>Major components and their functions:</strong></p>
+                        <ul>
+                            <li><strong>Heart</strong>: Muscular organ that pumps blood throughout the body</li>
+                            <li><strong>Blood vessels</strong>:
+                                <ul>
+                                    <li><strong>Arteries</strong>: Carry blood away from the heart</li>
+                                    <li><strong>Veins</strong>: Carry blood back to the heart</li>
+                                    <li><strong>Capillaries</strong>: Tiny vessels where materials are exchanged between blood and tissues</li>
+                                </ul>
+                            </li>
+                            <li><strong>Blood</strong>: Composed of plasma, red blood cells (carry oxygen), white blood cells (part of immune system), and platelets (help with clotting)</li>
+                        </ul>
+                        
+                        <p><strong>Circulation path:</strong> The heart has four chambers (right atrium, right ventricle, left atrium, left ventricle). Blood follows two circuits:</p>
+                        <ol>
+                            <li><strong>Pulmonary circulation</strong>: Right side of heart → lungs → left side of heart</li>
+                            <li><strong>Systemic circulation</strong>: Left side of heart → body tissues → right side of heart</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Trace the path of a red blood cell through the circulatory system, starting from the right atrium.</p>
+                            <ol>
+                                <li>Right atrium → right ventricle → pulmonary arteries → lungs</li>
+                                <li>In the lungs: Carbon dioxide is released, and oxygen is picked up</li>
+                                <li>Pulmonary veins → left atrium → left ventricle → aorta → arteries → capillaries</li>
+                                <li>In the tissues: Oxygen is released, and carbon dioxide is picked up</li>
+                                <li>Capillaries → veins → vena cavae → right atrium (and the cycle repeats)</li>
+                            </ol>
+                        </div>
+                        
+                        <h3>Nervous System</h3>
+                        <p>The nervous system controls and coordinates body functions and responds to internal and external stimuli.</p>
+                        
+                        <p><strong>Major components and their functions:</strong></p>
+                        <ul>
+                            <li><strong>Central Nervous System (CNS)</strong>:
+                                <ul>
+                                    <li><strong>Brain</strong>: Control center for the body</li>
+                                    <li><strong>Spinal cord</strong>: Connects the brain to the rest of the body, conducts messages</li>
+                                </ul>
+                            </li>
+                            <li><strong>Peripheral Nervous System (PNS)</strong>:
+                                <ul>
+                                    <li><strong>Sensory neurons</strong>: Carry information from sensory receptors to the CNS</li>
+                                    <li><strong>Motor neurons</strong>: Carry commands from the CNS to muscles and glands</li>
+                                </ul>
+                            </li>
+                            <li><strong>Neurons</strong>: Specialized cells that transmit electrical and chemical signals</li>
+                        </ul>
+                        
+                        <p><strong>Reflex arc:</strong> A rapid, automatic response to a stimulus that doesn't involve the brain. The pathway is: stimulus → sensory receptor → sensory neuron → spinal cord → motor neuron → effector (muscle or gland).</p>
+                    </div>
+                </div>
+                
+                <div id="g8-ecology" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Ecology Fundamentals</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>What is Ecology?</h3>
+                        <p>Ecology is the study of how organisms interact with each other and with their physical environment. It examines the distribution and abundance of organisms, the relationships between them, and how they are affected by their environment.</p>
+                        
+                        <h3>Levels of Ecological Organization</h3>
+                        <ul>
+                            <li><strong>Individual</strong>: A single organism</li>
+                            <li><strong>Population</strong>: A group of individuals of the same species living in the same area</li>
+                            <li><strong>Community</strong>: All the populations of different species living and interacting in an area</li>
+                            <li><strong>Ecosystem</strong>: A community of living organisms and their physical environment</li>
+                            <li><strong>Biome</strong>: A large region characterized by a specific climate and certain types of plants and animals</li>
+                            <li><strong>Biosphere</strong>: All ecosystems on Earth</li>
+                        </ul>
+                        
+                        <h3>Ecological Relationships</h3>
+                        <p>Organisms interact with each other in various ways:</p>
+                        
+                        <ul>
+                            <li><strong>Predation</strong>: One organism (predator) hunts and eats another (prey)</li>
+                            <li><strong>Competition</strong>: Organisms compete for limited resources</li>
+                            <li><strong>Symbiosis</strong>: Two species live in close association
+                                <ul>
+                                    <li><strong>Mutualism</strong>: Both species benefit (e.g., bees and flowers)</li>
+                                    <li><strong>Commensalism</strong>: One species benefits while the other is unaffected (e.g., birds nesting in trees)</li>
+                                    <li><strong>Parasitism</strong>: One species benefits at the expense of the other (e.g., tapeworms in human intestines)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h3>Food Chains and Food Webs</h3>
+                        <p>A food chain shows the linear sequence of who eats whom in an ecosystem:</p>
+                        <p>Producer (plant) → Primary consumer (herbivore) → Secondary consumer (carnivore) → Tertiary consumer (top predator)</p>
+                        
+                        <p>A food web is a more complex network of interconnected food chains.</p>
+                        
+                        <h3>Energy Flow in Ecosystems</h3>
+                        <p>Energy flows through an ecosystem in one direction, from the sun to producers to consumers.</p>
+                        
+                        <ul>
+                            <li><strong>Producers</strong> (autotrophs): Make their own food through photosynthesis or chemosynthesis</li>
+                            <li><strong>Consumers</strong> (heterotrophs): Get energy by eating other organisms
+                                <ul>
+                                    <li><strong>Primary consumers</strong>: Herbivores that eat plants</li>
+                                    <li><strong>Secondary consumers</strong>: Carnivores that eat herbivores</li>
+                                    <li><strong>Tertiary consumers</strong>: Carnivores that eat other carnivores</li>
+                                    <li><strong>Decomposers</strong>: Break down dead organisms and waste</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p>As energy moves through the ecosystem, only about 10% of the energy is transferred to the next trophic level. This is represented by the ecological pyramid.</p>
+                        
+                        <h3>Nutrient Cycles</h3>
+                        <p>Unlike energy, matter is recycled within and between ecosystems through biogeochemical cycles:</p>
+                        
+                        <ul>
+                            <li><strong>Water Cycle</strong>: The continuous movement of water between the atmosphere, land, and water bodies through processes like evaporation, transpiration, condensation, and precipitation</li>
+                            <li><strong>Carbon Cycle</strong>: The circulation of carbon through the atmosphere, plants, animals, soil, and water</li>
+                            <li><strong>Nitrogen Cycle</strong>: The conversion of nitrogen between different forms and its movement through the ecosystem</li>
+                            <li><strong>Phosphorus Cycle</strong>: The movement of phosphorus between rocks, water, soil, and organisms</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Explain how carbon moves through an ecosystem.</p>
+                            <ol>
+                                <li>Carbon dioxide (CO<sub>2</sub>) in the atmosphere is taken up by plants during photosynthesis.</li>
+                                <li>Plants convert CO<sub>2</sub> into glucose (organic carbon) and oxygen.</li>
+                                <li>When animals eat plants, they obtain this carbon.</li>
+                                <li>Plants and animals release CO<sub>2</sub> back into the atmosphere through respiration.</li>
+                                <li>When organisms die, decomposers break down their bodies, releasing CO<sub>2</sub>.</li>
+                                <li>Some carbon gets stored in fossil fuels over millions of years.</li>
+                                <li>When fossil fuels are burned, CO<sub>2</sub> is released back into the atmosphere.</li>
+                            </ol>
+                        </div>
+                        
+                        <h3>Ecological Succession</h3>
+                        <p>Ecological succession is the process of change in the species composition of an ecological community over time.</p>
+                        
+                        <ul>
+                            <li><strong>Primary succession</strong>: Begins in an area with no soil (e.g., after a volcanic eruption)</li>
+                            <li><strong>Secondary succession</strong>: Begins in an area where the ecosystem has been disturbed but soil remains (e.g., after a forest fire)</li>
+                        </ul>
+                        
+                        <p>The stages of succession:</p>
+                        <ol>
+                            <li><strong>Pioneer species</strong>: First organisms to colonize an area</li>
+                            <li><strong>Early successional species</strong>: Fast-growing, short-lived species</li>
+                            <li><strong>Mid-successional species</strong>: More complex plants and animals</li>
+                            <li><strong>Climax community</strong>: Stable, mature community that will persist until disturbed</li>
+                        </ol>
+                        
+                        <h3>Human Impact on Ecosystems</h3>
+                        <p>Human activities can significantly affect ecosystems:</p>
+                        
+                        <ul>
+                            <li><strong>Habitat destruction and fragmentation</strong>: Clearing forests, draining wetlands, etc.</li>
+                            <li><strong>Pollution</strong>: Air, water, and soil pollution affecting all organisms</li>
+                            <li><strong>Climate change</strong>: Altering temperature, precipitation patterns, and sea levels</li>
+                            <li><strong>Overexploitation</strong>: Harvesting species faster than they can reproduce</li>
+                            <li><strong>Introduction of invasive species</strong>: Non-native species that harm native ecosystems</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Practice Problem:</h4>
+                            <p>A forest ecosystem contains oak trees, squirrels, hawks, and decomposers like fungi. If all the hawks were removed from this ecosystem, what would likely happen to the squirrel population? How would this affect the oak trees?</p>
+                            <p><strong>Solution:</strong> If hawks (predators) were removed, the squirrel population would likely increase due to reduced predation. This could lead to more squirrels eating acorns from oak trees, potentially reducing oak tree reproduction. The ecosystem's balance would be disrupted, demonstrating the importance of predators in controlling prey populations and indirectly affecting other species in the community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade9" class="grade-content">
+                <h2>Grade 9 Biology Notes</h2>
+                
+                <div id="g9-genetics" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Genetics Basics</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Genetics</h3>
+                        <p>Genetics is the study of genes, genetic variation, and heredity in organisms. It explores how traits are passed from parents to offspring and how genetic information is expressed.</p>
+                        
+                        <h3>DNA Structure and Function</h3>
+                        <p>DNA (deoxyribonucleic acid) is the genetic material that carries the instructions for development, functioning, growth, and reproduction of all known organisms.</p>
+                        
+                        <p><strong>Structure of DNA:</strong></p>
+                        <ul>
+                            <li>Double helix structure (like a twisted ladder)</li>
+                            <li>Each strand is made of nucleotides consisting of:
+                                <ul>
+                                    <li>A sugar (deoxyribose)</li>
+                                    <li>A phosphate group</li>
+                                    <li>A nitrogenous base (Adenine, Thymine, Guanine, or Cytosine)</li>
+                                </ul>
+                            </li>
+                            <li>The bases pair specifically: Adenine (A) pairs with Thymine (T), and Guanine (G) pairs with Cytosine (C)</li>
+                        </ul>
+                        
+                        <p><strong>Function of DNA:</strong></p>
+                        <ul>
+                            <li>Stores genetic information in genes</li>
+                            <li>Provides instructions for making proteins</li>
+                            <li>Replicates during cell division to pass genetic information to daughter cells</li>
+                        </ul>
+                        
+                        <h3>Genes and Chromosomes</h3>
+                        <p>Genes are segments of DNA that contain the instructions for making specific proteins. Humans have about 20,000-25,000 genes.</p>
+                        
+                        <p>Chromosomes are structures made of DNA and proteins that carry genes. Humans have 46 chromosomes (23 pairs) in most cells.</p>
+                        
+                        <h3>Traits and Inheritance</h3>
+                        <p>A trait is a characteristic that an organism can pass to its offspring through its genes.</p>
+                        
+                        <p><strong>Key terms:</strong></p>
+                        <ul>
+                            <li><strong>Allele</strong>: Different forms of a gene (e.g., blue eyes vs. brown eyes)</li>
+                            <li><strong>Dominant allele</strong>: Expressed when present (usually denoted with a capital letter, e.g., "B")</li>
+                            <li><strong>Recessive allele</strong>: Only expressed when two copies are present (usually denoted with a lowercase letter, e.g., "b")</li>
+                            <li><strong>Genotype</strong>: The genetic makeup of an organism (e.g., BB, Bb, or bb)</li>
+                            <li><strong>Phenotype</strong>: The observable traits of an organism (e.g., brown eyes or blue eyes)</li>
+                            <li><strong>Homozygous</strong>: Having two identical alleles for a gene (e.g., BB or bb)</li>
+                            <li><strong>Heterozygous</strong>: Having two different alleles for a gene (e.g., Bb)</li>
+                        </ul>
+                        
+                        <h3>Mendel's Laws of Inheritance</h3>
+                        <p>Gregor Mendel discovered the basic principles of inheritance through his experiments with pea plants.</p>
+                        
+                        <p><strong>Law of Segregation:</strong> During gamete formation, the two alleles for each trait separate so that each gamete receives only one allele.</p>
+                        
+                        <p><strong>Law of Independent Assortment:</strong> Different pairs of alleles separate independently of each other during gamete formation.</p>
+                        
+                        <div class="example">
+                            <h4>Example: Punnett Square</h4>
+                            <p>If we cross a pea plant that is heterozygous for round seeds (Rr) with a plant that has wrinkled seeds (rr), what will be the expected phenotype ratio in the offspring?</p>
+                            <p>Round (R) is dominant over wrinkled (r).</p>
+                            <table style="border-collapse: collapse; margin: 10px auto;">
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>R</strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>r</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>r</strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">Rr</td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">rr</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>r</strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">Rr</td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">rr</td>
+                                </tr>
+                            </table>
+                            <p>Genotype ratio: 2 Rr : 2 rr or 1:1</p>
+                            <p>Phenotype ratio: 2 Round : 2 Wrinkled or 1:1</p>
+                            <p>50% of the offspring will have round seeds, and 50% will have wrinkled seeds.</p>
+                        </div>
+                        
+                        <h3>Incomplete Dominance and Codominance</h3>
+                        <p><strong>Incomplete dominance</strong> occurs when the heterozygous phenotype is intermediate between the two homozygous phenotypes. For example, when a red flower (RR) is crossed with a white flower (rr), the offspring are pink (Rr).</p>
+                        
+                        <p><strong>Codominance</strong> occurs when both alleles are fully expressed in the heterozygote. For example, in certain varieties of chickens, the allele for black feathers (B) and the allele for white feathers (W) are codominant, resulting in speckled feathers in heterozygotes (BW).</p>
+                        
+                        <h3>Sex Determination and Sex-Linked Traits</h3>
+                        <p>In humans and many other animals, sex is determined by sex chromosomes:</p>
+                        <ul>
+                            <li>Females have two X chromosomes (XX)</li>
+                            <li>Males have one X and one Y chromosome (XY)</li>
+                        </ul>
+                        
+                        <p><strong>Sex-linked traits</strong> are associated with genes located on the sex chromosomes, particularly the X chromosome. Since males have only one X chromosome, they are more likely to express recessive X-linked traits (e.g., color blindness, hemophilia).</p>
+                        
+                        <div class="example">
+                            <h4>Example: Sex-Linked Inheritance</h4>
+                            <p>A woman who is a carrier for color blindness (X<sup>C</sup>X<sup>c</sup>) marries a man with normal vision (X<sup>C</sup>Y). What is the probability that their son will be color blind?</p>
+                            <p>X<sup>C</sup> = normal vision allele, X<sup>c</sup> = color blindness allele</p>
+                            <table style="border-collapse: collapse; margin: 10px auto;">
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>X<sup>C</sup></strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>X<sup>c</sup></strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>X<sup>C</sup></strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">X<sup>C</sup>X<sup>C</sup><br>(normal female)</td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">X<sup>C</sup>X<sup>c</sup><br>(carrier female)</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;"><strong>Y</strong></td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">X<sup>C</sup>Y<br>(normal male)</td>
+                                    <td style="width: 40px; height: 40px; border: 1px solid #ccc; text-align: center;">X<sup>c</sup>Y<br>(colorblind male)</td>
+                                </tr>
+                            </table>
+                            <p>The probability that their son will be color blind is 50% or 1/2.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade10" class="grade-content">
+                <h2>Grade 10 Biology Notes</h2>
+                
+                <div id="g10-evolution" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Theory of Evolution</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Evolution</h3>
+                        <p>Evolution is the process by which species change over time. The theory of evolution explains how species of living organisms have changed over geological time and how the diversity of life on Earth developed.</p>
+                        
+                        <h3>Historical Development of Evolutionary Theory</h3>
+                        <ul>
+                            <li><strong>Jean-Baptiste Lamarck</strong> proposed that organisms could pass on traits acquired during their lifetime to their offspring (inheritance of acquired characteristics). While this specific idea is now known to be incorrect, Lamarck was one of the first to propose that species change over time.</li>
+                            <li><strong>Charles Darwin</strong> and <strong>Alfred Russel Wallace</strong> independently developed the theory of evolution by natural selection. Darwin's book "On the Origin of Species" (1859) provided extensive evidence for evolution and explained the mechanism of natural selection.</li>
+                        </ul>
+                        
+                        <h3>Darwin's Theory of Natural Selection</h3>
+                        <p>Natural selection is the process by which organisms better adapted to their environment tend to survive and produce more offspring. The key principles include:</p>
+                        
+                        <ol>
+                            <li><strong>Variation</strong>: Individuals within a species show variation in traits.</li>
+                            <li><strong>Inheritance</strong>: Some traits can be passed from parents to offspring.</li>
+                            <li><strong>Overproduction</strong>: Organisms produce more offspring than can survive.</li>
+                            <li><strong>Competition</strong>: Individuals compete for limited resources.</li>
+                            <li><strong>Selection</strong>: Individuals with favorable traits are more likely to survive and reproduce.</li>
+                            <li><strong>Adaptation</strong>: Over time, favorable traits become more common in the population.</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Example: Peppered Moths</h4>
+                            <p>The peppered moth (Biston betularia) exists in light and dark forms. Before the Industrial Revolution in England, the light-colored moths were more common because they could camouflage against light-colored trees and lichens. During the Industrial Revolution, pollution killed the lichens and darkened the trees with soot. The dark moths became more common because they were better camouflaged against the now-dark trees and were less likely to be eaten by birds. When air pollution laws reduced soot, the light moths became more common again. This is an example of natural selection in action.</p>
+                        </div>
+                        
+                        <h3>Evidence for Evolution</h3>
+                        <p>Several lines of evidence support the theory of evolution:</p>
+                        
+                        <ul>
+                            <li><strong>Fossil Record</strong>: Fossils show how species have changed over time and provide evidence of transitional forms between species.</li>
+                            <li><strong>Comparative Anatomy</strong>:
+                                <ul>
+                                    <li><strong>Homologous structures</strong>: Structures that are similar due to common ancestry (e.g., the forelimbs of mammals)</li>
+                                    <li><strong>Analogous structures</strong>: Structures that are similar due to similar function but not common ancestry (e.g., wings of birds and insects)</li>
+                                    <li><strong>Vestigial structures</strong>: Structures that had a function in ancestors but are reduced and functionless in current species (e.g., hip bones in whales)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Embryology</strong>: The embryos of different vertebrates show similarities in their early stages, suggesting common ancestry.</li>
+                            <li><strong>Molecular Biology</strong>: DNA and protein sequences show similarities between related species. More closely related species have more similar DNA.</li>
+                            <li><strong>Biogeography</strong>: The geographical distribution of species reflects both their evolutionary history and the geological history of Earth.</li>
+                            <li><strong>Observed Instances</strong>: Evolution has been directly observed in nature and in laboratory settings (e.g., antibiotic resistance in bacteria).</li>
+                        </ul>
+                        
+                        <h3>Modern Evolutionary Synthesis</h3>
+                        <p>The modern evolutionary synthesis combines Darwin's theory of natural selection with Mendelian genetics and population genetics. Key concepts include:</p>
+                        
+                        <ul>
+                            <li><strong>Genetic Variation</strong>: The raw material for evolution comes from mutations, genetic recombination, and gene flow.</li>
+                            <li><strong>Natural Selection</strong>: The process that leads to the adaptation of organisms to their environment.</li>
+                            <li><strong>Genetic Drift</strong>: Random changes in allele frequencies in a population, especially in small populations.</li>
+                            <li><strong>Gene Flow</strong>: The transfer of genes between populations through migration.</li>
+                            <li><strong>Speciation</strong>: The process by which new species arise, often through reproductive isolation.</li>
+                        </ul>
+                        
+                        <h3>Types of Selection</h3>
+                        <ul>
+                            <li><strong>Directional Selection</strong>: Favors individuals at one extreme of a trait (e.g., giraffes with longer necks).</li>
+                            <li><strong>Stabilizing Selection</strong>: Favors individuals with intermediate traits (e.g., human birth weight).</li>
+                            <li><strong>Disruptive Selection</strong>: Favors individuals at both extremes of a trait (e.g., beak sizes in certain finches).</li>
+                        </ul>
+                        
+                        <h3>Speciation</h3>
+                        <p>Speciation is the process by which new species arise. The main types of speciation are:</p>
+                        
+                        <ul>
+                            <li><strong>Allopatric Speciation</strong>: Occurs when a population is divided by a geographical barrier, leading to reproductive isolation and eventual divergence.</li>
+                            <li><strong>Sympatric Speciation</strong>: Occurs without geographical separation, often due to polyploidy (in plants) or through specialized adaptations to different niches within the same area.</li>
+                            <li><strong>Parapatric Speciation</strong>: Occurs when a population extends across a geographic barrier or gradient, and members at different extremes of the range adapt to different environments.</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example: Galapagos Finches</h4>
+                            <p>Darwin's finches on the Galapagos Islands provide a classic example of adaptive radiation, where a single ancestral species diversified into many species with different beak shapes adapted to different food sources. For example, some have large, powerful beaks for cracking nuts, while others have thin, pointed beaks for catching insects. This diversification likely occurred through allopatric speciation, as finches on different islands evolved in isolation from each other.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade11" class="grade-content">
+                <h2>Grade 11 Biology Notes</h2>
+                
+                <div id="g11-biochemistry" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Biochemistry</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Biochemistry</h3>
+                        <p>Biochemistry is the study of chemical processes within and relating to living organisms. It deals with the structure and function of cellular components such as proteins, carbohydrates, lipids, nucleic acids, and other biomolecules.</p>
+                        
+                        <h3>Carbohydrates</h3>
+                        <p>Carbohydrates are organic compounds composed of carbon, hydrogen, and oxygen, usually in the ratio of 1:2:1.</p>
+                        
+                        <p><strong>Functions:</strong></p>
+                        <ul>
+                            <li>Primary source of energy (e.g., glucose)</li>
+                            <li>Structural components (e.g., cellulose in plants)</li>
+                            <li>Cell recognition and signaling</li>
+                        </ul>
+                        
+                        <p><strong>Types:</strong></p>
+                        <ul>
+                            <li><strong>Monosaccharides</strong>: Simple sugars (e.g., glucose, fructose, galactose)</li>
+                            <li><strong>Disaccharides</strong>: Two monosaccharides linked together (e.g., sucrose, lactose, maltose)</li>
+                            <li><strong>Polysaccharides</strong>: Long chains of monosaccharides (e.g., starch, glycogen, cellulose)</li>
+                        </ul>
+                        
+                        <h3>Lipids</h3>
+                        <p>Lipids are a diverse group of hydrophobic or amphipathic molecules.</p>
+                        
+                        <p><strong>Functions:</strong></p>
+                        <ul>
+                            <li>Energy storage</li>
+                            <li>Cell membrane components</li>
+                            <li>Hormones and signaling molecules</li>
+                            <li>Insulation and protection</li>
+                        </ul>
+                        
+                        <p><strong>Types:</strong></p>
+                        <ul>
+                            <li><strong>Fats and oils (triglycerides)</strong>: Made of glycerol and three fatty acids</li>
+                            <li><strong>Phospholipids</strong>: Main components of cell membranes</li>
+                            <li><strong>Steroids</strong>: Include cholesterol and hormones like testosterone and estrogen</li>
+                            <li><strong>Waxes</strong>: Protective coatings</li>
+                        </ul>
+                        
+                        <h3>Proteins</h3>
+                        <p>Proteins are large, complex molecules made up of amino acids.</p>
+                        
+                        <p><strong>Functions:</strong></p>
+                        <ul>
+                            <li>Enzymes (biological catalysts)</li>
+                            <li>Structural components (e.g., collagen)</li>
+                            <li>Transport molecules (e.g., hemoglobin)</li>
+                            <li>Hormones (e.g., insulin)</li>
+                            <li>Defense (e.g., antibodies)</li>
+                        </ul>
+                        
+                        <p><strong>Structure:</strong></p>
+                        <ul>
+                            <li><strong>Primary structure</strong>: The sequence of amino acids</li>
+                            <li><strong>Secondary structure</strong>: Regular patterns formed by hydrogen bonds (e.g., alpha-helix, beta-pleated sheet)</li>
+                            <li><strong>Tertiary structure</strong>: The overall 3D shape of a protein</li>
+                            <li><strong>Quaternary structure</strong>: The arrangement of multiple protein subunits</li>
+                        </ul>
+                        
+                        <h3>Nucleic Acids</h3>
+                        <p>Nucleic acids store and transmit genetic information.</p>
+                        
+                        <p><strong>Types:</strong></p>
+                        <ul>
+                            <li><strong>DNA (deoxyribonucleic acid)</strong>: The genetic material that contains the instructions for development, functioning, growth, and reproduction</li>
+                            <li><strong>RNA (ribonucleic acid)</strong>: Involved in protein synthesis and other cellular processes</li>
+                        </ul>
+                        
+                        <p><strong>Structure:</strong> Both DNA and RNA are made up of nucleotides, each consisting of:</p>
+                        <ul>
+                            <li>A sugar (deoxyribose in DNA, ribose in RNA)</li>
+                            <li>A phosphate group</li>
+                            <li>A nitrogenous base (Adenine, Guanine, Cytosine, and Thymine in DNA; Adenine, Guanine, Cytosine, and Uracil in RNA)</li>
+                        </ul>
+                        
+                        <h3>Enzymes</h3>
+                        <p>Enzymes are biological catalysts that speed up chemical reactions without being consumed in the process.</p>
+                        
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Highly specific for their substrates</li>
+                            <li>Affected by temperature, pH, and substrate concentration</li>
+                            <li>Can be inhibited or activated by various molecules</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Enzyme + Substrate ⇄ Enzyme-Substrate Complex → Enzyme + Product</p>
+                        </div>
+                        
+                        <p><strong>Factors affecting enzyme activity:</strong></p>
+                        <ul>
+                            <li><strong>Temperature</strong>: Enzymes have an optimal temperature. Too high, and they denature; too low, and the reaction rate decreases.</li>
+                            <li><strong>pH</strong>: Each enzyme has an optimal pH range.</li>
+                            <li><strong>Substrate concentration</strong>: As substrate concentration increases, reaction rate increases until all enzyme active sites are occupied.</li>
+                            <li><strong>Enzyme concentration</strong>: Higher enzyme concentration leads to faster reaction rates.</li>
+                            <li><strong>Inhibitors</strong>: Molecules that decrease enzyme activity (competitive, noncompetitive, or uncompetitive).</li>
+                            <li><strong>Cofactors and coenzymes</strong>: Non-protein components that aid enzyme function.</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example: Enzyme Inhibition</h4>
+                            <p>Penicillin works by inhibiting an enzyme (transpeptidase) that bacteria use to build their cell walls. This is an example of competitive inhibition, where the penicillin molecule binds to the active site of the enzyme, preventing the normal substrate from binding. Without functional cell walls, the bacteria cannot survive, which is how penicillin acts as an antibiotic.</p>
+                        </div>
+                        
+                        <h3>Metabolism</h3>
+                        <p>Metabolism is the set of life-sustaining chemical reactions in organisms. The two main categories are:</p>
+                        
+                        <ul>
+                            <li><strong>Catabolism</strong>: Breakdown of complex molecules to release energy (e.g., cellular respiration)</li>
+                            <li><strong>Anabolism</strong>: Building of complex molecules using energy (e.g., protein synthesis, photosynthesis)</li>
+                        </ul>
+                        
+                        <p><strong>Cellular Respiration:</strong> The process by which cells break down glucose to produce ATP (energy).</p>
+                        
+                        <div class="formula">
+                            <p>C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub> → 6CO<sub>2</sub> + 6H<sub>2</sub>O + Energy (ATP)</p>
+                        </div>
+                        
+                        <p>Main stages:</p>
+                        <ul>
+                            <li><strong>Glycolysis</strong>: Glucose is split into two pyruvate molecules (occurs in cytoplasm)</li>
+                            <li><strong>Citric Acid Cycle (Krebs Cycle)</strong>: Pyruvate is further broken down (occurs in mitochondria)</li>
+                            <li><strong>Electron Transport Chain</strong>: Electrons are passed along a chain of molecules, generating ATP (occurs in mitochondrial membrane)</li>
+                        </ul>
+                        
+                        <p><strong>Photosynthesis:</strong> The process by which plants and some other organisms convert light energy into chemical energy.</p>
+                        
+                        <div class="formula">
+                            <p>6CO<sub>2</sub> + 6H<sub>2</sub>O + Light Energy → C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub></p>
+                        </div>
+                        
+                        <p>Main stages:</p>
+                        <ul>
+                            <li><strong>Light-Dependent Reactions</strong>: Light energy is converted to chemical energy in the form of ATP and NADPH</li>
+                            <li><strong>Calvin Cycle (Light-Independent Reactions)</strong>: ATP and NADPH are used to convert carbon dioxide into glucose</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="math.html">Mathematics</a></li>
+                            <li><a href="physics.html">Physics</a></li>
+                            <li><a href="chemistry.html">Chemistry</a></li>
+                            <li><a href="biology.html">Biology</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="#" data-target="grade7">Grade 7</a></li>
+                            <li><a href="#" data-target="grade8">Grade 8</a></li>
+                            <li><a href="#" data-target="grade9">Grade 9</a></li>
+                            <li><a href="#" data-target="grade10">Grade 10</a></li>
+                            <li><a href="#" data-target="grade11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../premium/index.html">Premium Content</a></li>
+                            <li><a href="../index.html#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="../index.html#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/subscription.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab Navigation for Grade Levels
+            const tabButtons = document.querySelectorAll('.tab-btn[data-target]');
+            const gradeContents = document.querySelectorAll('.grade-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    gradeContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    const targetId = button.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // Footer grade links
+            const footerGradeLinks = document.querySelectorAll('.footer-column a[data-target]');
+            
+            footerGradeLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    
+                    // Activate the corresponding tab
+                    document.querySelector(`.tab-btn[data-target="${targetId}"]`).click();
+                    
+                    // Scroll to the grade content
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Donation Modal
+            const donateFooter = document.getElementById('donateFooter');
+            if(donateFooter) {
+                donateFooter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('This feature would redirect to a donation page in a real application.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

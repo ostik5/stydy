@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics - Study Notes Hub</title>
+    <meta name="description" content="Comprehensive physics study notes and cheat sheets for grades 7-11. Learn mechanics, electricity, waves and more.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Subject-specific styles */
+        .subject-header {
+            background: linear-gradient(rgba(92, 148, 110, 0.9), rgba(92, 148, 110, 0.8)), url('https://source.unsplash.com/random/1200x600/?physics') no-repeat center center/cover;
+            color: #fff;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .study-note {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .study-note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .study-note-header h2 {
+            color: var(--physics-color);
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .study-note-content {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .formula {
+            background-color: #f0f4f8;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--physics-color);
+            margin: var(--spacing-md) 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .example h4 {
+            color: var(--physics-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .bookmark-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-lg);
+            color: var(--physics-color);
+        }
+        
+        .pdf-download-container {
+            text-align: right;
+            margin-top: var(--spacing-md);
+        }
+        
+        .pdf-download-btn {
+            font-size: var(--font-sm);
+        }
+        
+        .premium-locked {
+            position: relative;
+            background-color: #f0f0f0;
+            color: #888;
+        }
+        
+        .premium-locked:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .premium-locked .fa-crown {
+            color: var(--premium-color);
+            margin-left: var(--spacing-xs);
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .notification {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success i {
+            color: #4caf50;
+        }
+        
+        .notification.error i {
+            color: #f44336;
+        }
+        
+        .notification i {
+            margin-right: var(--spacing-sm);
+            font-size: var(--font-lg);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="math.html" class="math-color">Mathematics</a></li>
+                            <li><a href="physics.html" class="physics-color active">Physics</a></li>
+                            <li><a href="chemistry.html" class="chemistry-color">Chemistry</a></li>
+                            <li><a href="biology.html" class="biology-color">Biology</a></li>
+                            <li><a href="history.html" class="history-color">History</a></li>
+                            <li><a href="literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#grades">Grades 7-11</a></li>
+                    <li><a href="../premium/index.html">Premium Content</a></li>
+                    <li><a href="#" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="subject-header">
+        <div class="container">
+            <h1>Physics</h1>
+            <p>Study notes and cheat sheets for mechanics, electricity, waves and more</p>
+        </div>
+    </div>
+
+    <section class="subject-page">
+        <div class="container">
+            <div class="grade-selector">
+                <h2>Select Grade Level</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="grade7">Grade 7</button>
+                    <button class="tab-btn" data-target="grade8">Grade 8</button>
+                    <button class="tab-btn" data-target="grade9">Grade 9</button>
+                    <button class="tab-btn" data-target="grade10">Grade 10</button>
+                    <button class="tab-btn" data-target="grade11">Grade 11</button>
+                </div>
+            </div>
+
+            <div id="grade7" class="grade-content active">
+                <h2>Grade 7 Physics Notes</h2>
+                
+                <div id="g7-forces" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Forces and Motion</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Forces</h3>
+                        <p>A force is a push or pull that can cause an object to move, stop, or change direction. Forces are measured in newtons (N).</p>
+                        
+                        <div class="formula">
+                            <p>Newton's First Law: An object at rest stays at rest, and an object in motion stays in motion with the same speed and direction unless acted upon by an unbalanced force.</p>
+                        </div>
+                        
+                        <h3>Types of Forces</h3>
+                        <ul>
+                            <li><strong>Gravity</strong>: The force that attracts objects toward each other. On Earth, gravity pulls objects downward.</li>
+                            <li><strong>Friction</strong>: The force that opposes motion between surfaces that are in contact.</li>
+                            <li><strong>Normal force</strong>: The force exerted by a surface on an object in contact with it.</li>
+                            <li><strong>Applied force</strong>: A force applied to an object by a person or another object.</li>
+                        </ul>
+                        
+                        <h3>Balanced and Unbalanced Forces</h3>
+                        <p>When forces on an object are balanced (equal in opposite directions), the object will not change its motion. When forces are unbalanced, the object will accelerate in the direction of the net force.</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A book is sitting on a table. The force of gravity pulls it downward with 10 N. What is the normal force exerted by the table on the book?</p>
+                            <p>Since the book is not moving, the forces must be balanced. The normal force is 10 N upward, balancing the 10 N of gravity.</p>
+                        </div>
+                        
+                        <h3>Newton's Second Law</h3>
+                        <p>The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.</p>
+                        
+                        <div class="formula">
+                            <p>F = m × a</p>
+                            <p>where:</p>
+                            <p>F = net force (N)</p>
+                            <p>m = mass (kg)</p>
+                            <p>a = acceleration (m/s²)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A 5 kg object experiences a net force of 15 N. What is its acceleration?</p>
+                            <p>a = F/m = 15 N / 5 kg = 3 m/s²</p>
+                        </div>
+                        
+                        <h3>Newton's Third Law</h3>
+                        <p>For every action (force), there is an equal and opposite reaction (force).</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>When you push on a wall, the wall pushes back on you with equal force. This is why you don't move through the wall when you push on it.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g7-energy" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Energy Types</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>What is Energy?</h3>
+                        <p>Energy is the ability to do work or cause change. It exists in many forms and can be transformed from one form to another. Energy is measured in joules (J).</p>
+                        
+                        <h3>Types of Energy</h3>
+                        <ul>
+                            <li><strong>Kinetic Energy</strong>: Energy of motion. Examples include running, wind, and moving vehicles.</li>
+                            <li><strong>Potential Energy</strong>: Stored energy due to position or condition. Examples include a book on a shelf or a stretched rubber band.</li>
+                            <li><strong>Thermal Energy</strong>: Energy of moving particles in matter, related to temperature.</li>
+                            <li><strong>Chemical Energy</strong>: Energy stored in chemical bonds. Examples include food, batteries, and fuel.</li>
+                            <li><strong>Electrical Energy</strong>: Energy from electric charges. Examples include lightning and electrical appliances.</li>
+                            <li><strong>Sound Energy</strong>: Energy from vibrations traveling through matter.</li>
+                            <li><strong>Light Energy</strong>: Energy from electromagnetic waves. Examples include sunlight and light bulbs.</li>
+                            <li><strong>Nuclear Energy</strong>: Energy stored in atomic nuclei.</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Kinetic Energy: KE = (1/2) × m × v²</p>
+                            <p>where:</p>
+                            <p>m = mass (kg)</p>
+                            <p>v = velocity (m/s)</p>
+                            <p>Gravitational Potential Energy: PE = m × g × h</p>
+                            <p>where:</p>
+                            <p>m = mass (kg)</p>
+                            <p>g = gravitational acceleration (9.8 m/s²)</p>
+                            <p>h = height (m)</p>
+                        </div>
+                        
+                        <h3>Energy Transformations</h3>
+                        <p>Energy can change from one form to another. Here are some examples:</p>
+                        <ul>
+                            <li>A ball rolling down a hill: Gravitational potential energy → Kinetic energy</li>
+                            <li>Burning wood: Chemical energy → Thermal energy + Light energy</li>
+                            <li>Solar panels: Light energy → Electrical energy</li>
+                            <li>A battery in a flashlight: Chemical energy → Electrical energy → Light energy</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the kinetic energy of a 60 kg person running at 3 m/s.</p>
+                            <p>KE = (1/2) × m × v²</p>
+                            <p>KE = (1/2) × 60 kg × (3 m/s)²</p>
+                            <p>KE = (1/2) × 60 kg × 9 m²/s²</p>
+                            <p>KE = 30 kg × 9 m²/s²</p>
+                            <p>KE = 270 J</p>
+                        </div>
+                        
+                        <h3>Conservation of Energy</h3>
+                        <p>Energy cannot be created or destroyed, only transformed from one form to another. The total amount of energy in an isolated system remains constant.</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A 2 kg ball is held 10 m above the ground. Calculate its potential energy and the kinetic energy just before it hits the ground (ignoring air resistance).</p>
+                            <p>Initial Potential Energy: PE = m × g × h = 2 kg × 9.8 m/s² × 10 m = 196 J</p>
+                            <p>By conservation of energy, if all PE is converted to KE:</p>
+                            <p>Final Kinetic Energy = Initial Potential Energy = 196 J</p>
+                        </div>
+                        
+                        <h3>Practice Problems</h3>
+                        <ol>
+                            <li>What is the kinetic energy of a 1,500 kg car traveling at 25 m/s?</li>
+                            <li>How high must a 0.5 kg object be lifted to have a potential energy of 24.5 J?</li>
+                            <li>A pendulum has a mass of 0.2 kg and swings to a maximum height of 0.3 m. What is its maximum kinetic energy at the lowest point of its swing?</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Solutions:</h4>
+                            <p>1. KE = (1/2) × m × v² = (1/2) × 1,500 kg × (25 m/s)² = 468,750 J</p>
+                            <p>2. PE = m × g × h, so h = PE / (m × g) = 24.5 J / (0.5 kg × 9.8 m/s²) = 5 m</p>
+                            <p>3. At maximum height, PE = m × g × h = 0.2 kg × 9.8 m/s² × 0.3 m = 0.588 J. By conservation of energy, the maximum KE at the lowest point equals the PE at the highest point = 0.588 J.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade8" class="grade-content">
+                <h2>Grade 8 Physics Notes</h2>
+                
+                <div id="g8-electricity" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Basic Electricity</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Electricity</h3>
+                        <p>Electricity is a form of energy resulting from the existence of charged particles. There are two types of electric charge: positive and negative.</p>
+                        
+                        <h3>Electric Charge</h3>
+                        <ul>
+                            <li>Like charges repel each other (positive-positive or negative-negative)</li>
+                            <li>Unlike charges attract each other (positive-negative)</li>
+                            <li>The unit of electric charge is the coulomb (C)</li>
+                        </ul>
+                        
+                        <h3>Electric Current</h3>
+                        <p>Electric current is the flow of electric charge through a conductor. It's measured in amperes (A).</p>
+                        
+                        <div class="formula">
+                            <p>I = Q / t</p>
+                            <p>where:</p>
+                            <p>I = current (A)</p>
+                            <p>Q = charge (C)</p>
+                            <p>t = time (s)</p>
+                        </div>
+                        
+                        <h3>Voltage</h3>
+                        <p>Voltage (electric potential difference) is the "pressure" that pushes electric charges through a circuit. It's measured in volts (V).</p>
+                        
+                        <h3>Resistance</h3>
+                        <p>Resistance is a measure of how much a material opposes the flow of electric current. It's measured in ohms (Ω).</p>
+                        
+                        <div class="formula">
+                            <p>Ohm's Law: V = I × R</p>
+                            <p>where:</p>
+                            <p>V = voltage (V)</p>
+                            <p>I = current (A)</p>
+                            <p>R = resistance (Ω)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A circuit has a resistance of 5 Ω and a current of 2 A. What is the voltage?</p>
+                            <p>V = I × R = 2 A × 5 Ω = 10 V</p>
+                        </div>
+                        
+                        <h3>Electric Circuits</h3>
+                        <p>An electric circuit is a complete path through which electric current can flow. The main components of a circuit include:</p>
+                        <ul>
+                            <li><strong>Power Source</strong>: Provides energy (e.g., battery, generator)</li>
+                            <li><strong>Conductors</strong>: Materials that allow electric current to flow easily (e.g., copper wires)</li>
+                            <li><strong>Load</strong>: Device that converts electrical energy to another form (e.g., light bulb, motor)</li>
+                            <li><strong>Switch</strong>: Controls the flow of current by opening or closing the circuit</li>
+                        </ul>
+                        
+                        <h3>Series and Parallel Circuits</h3>
+                        <p><strong>Series Circuit</strong>: Components are connected one after another in a single path.</p>
+                        <ul>
+                            <li>The same current flows through all components</li>
+                            <li>Total voltage equals the sum of individual voltage drops</li>
+                            <li>Total resistance equals the sum of individual resistances</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>For resistors in series: R<sub>total</sub> = R₁ + R₂ + R₃ + ...</p>
+                        </div>
+                        
+                        <p><strong>Parallel Circuit</strong>: Components are connected across the same voltage source with multiple paths for current.</p>
+                        <ul>
+                            <li>The voltage is the same across all components</li>
+                            <li>Total current equals the sum of individual currents</li>
+                            <li>Total resistance is less than the smallest individual resistance</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>For resistors in parallel: 1/R<sub>total</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ...</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the total resistance for three resistors connected in series: 3 Ω, 5 Ω, and 7 Ω.</p>
+                            <p>R<sub>total</sub> = 3 Ω + 5 Ω + 7 Ω = 15 Ω</p>
+                            <p>Now calculate the total resistance if the same resistors are connected in parallel:</p>
+                            <p>1/R<sub>total</sub> = 1/3 Ω + 1/5 Ω + 1/7 Ω = 0.333 + 0.2 + 0.143 = 0.676</p>
+                            <p>R<sub>total</sub> = 1/0.676 = 1.48 Ω</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 8 study notes would go here -->
+            </div>
+
+            <div id="grade9" class="grade-content">
+                <h2>Grade 9 Physics Notes</h2>
+                
+                <div id="g9-waves" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Waves and Sound</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Types of Waves</h3>
+                        <p>A wave is a disturbance that transfers energy from one place to another without transferring matter. There are two main types of waves:</p>
+                        
+                        <ul>
+                            <li><strong>Mechanical Waves</strong>: Require a medium to travel through (e.g., sound waves, water waves)</li>
+                            <li><strong>Electromagnetic Waves</strong>: Don't require a medium (e.g., light, radio waves, X-rays)</li>
+                        </ul>
+                        
+                        <p>Waves can also be categorized by how they move:</p>
+                        <ul>
+                            <li><strong>Transverse Waves</strong>: Particles of the medium move perpendicular to the direction of wave propagation (e.g., light waves)</li>
+                            <li><strong>Longitudinal Waves</strong>: Particles of the medium move parallel to the direction of wave propagation (e.g., sound waves)</li>
+                        </ul>
+                        
+                        <h3>Wave Properties</h3>
+                        <ul>
+                            <li><strong>Wavelength (λ)</strong>: Distance between two consecutive points that are in phase (e.g., crest to crest)</li>
+                            <li><strong>Frequency (f)</strong>: Number of complete waves passing a point per second, measured in hertz (Hz)</li>
+                            <li><strong>Amplitude</strong>: Maximum displacement from equilibrium</li>
+                            <li><strong>Period (T)</strong>: Time taken for one complete wave to pass a point</li>
+                            <li><strong>Wave speed (v)</strong>: Speed at which the wave travels</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>v = λ × f</p>
+                            <p>T = 1/f</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A wave has a frequency of 20 Hz and a wavelength of 0.5 m. Calculate its speed.</p>
+                            <p>v = λ × f = 0.5 m × 20 Hz = 10 m/s</p>
+                        </div>
+                        
+                        <h3>Sound Waves</h3>
+                        <p>Sound is a longitudinal wave that travels through a medium by compressing and expanding it. Sound cannot travel through a vacuum.</p>
+                        
+                        <ul>
+                            <li><strong>Speed of sound</strong>: Approximately 343 m/s in air at 20°C</li>
+                            <li><strong>Audible range</strong>: Humans can typically hear frequencies between 20 Hz and 20,000 Hz</li>
+                            <li><strong>Infrasound</strong>: Sound waves with frequencies below 20 Hz</li>
+                            <li><strong>Ultrasound</strong>: Sound waves with frequencies above 20,000 Hz</li>
+                        </ul>
+                        
+                        <h3>Sound Properties</h3>
+                        <ul>
+                            <li><strong>Pitch</strong>: Determined by frequency - higher frequency means higher pitch</li>
+                            <li><strong>Volume/Loudness</strong>: Determined by amplitude - greater amplitude means louder sound</li>
+                            <li><strong>Timbre/Quality</strong>: Determined by the waveform - allows us to distinguish between different instruments playing the same note</li>
+                        </ul>
+                        
+                        <h3>Wave Phenomena</h3>
+                        <ul>
+                            <li><strong>Reflection</strong>: Waves bounce off a surface (e.g., echoes)</li>
+                            <li><strong>Refraction</strong>: Waves change direction when passing from one medium to another</li>
+                            <li><strong>Diffraction</strong>: Waves bend around obstacles or through openings</li>
+                            <li><strong>Interference</strong>: When two waves meet, they can reinforce (constructive) or cancel (destructive) each other</li>
+                            <li><strong>Resonance</strong>: Increased amplitude when an object is forced to vibrate at its natural frequency</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the wavelength of a sound wave with a frequency of 440 Hz (concert A) in air where the speed of sound is 343 m/s.</p>
+                            <p>λ = v/f = 343 m/s ÷ 440 Hz = 0.78 m</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g9-mechanics" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Advanced Mechanics</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Work, Energy, and Power</h3>
+                        <p>Work is done when a force moves an object over a distance. Energy is the ability to do work, and power is the rate at which work is done.</p>
+                        
+                        <div class="formula">
+                            <p>Work: W = F × d × cos θ</p>
+                            <p>where:</p>
+                            <p>W = work (J)</p>
+                            <p>F = force (N)</p>
+                            <p>d = displacement (m)</p>
+                            <p>θ = angle between force and displacement</p>
+                            <p>Power: P = W/t = F × v</p>
+                            <p>where:</p>
+                            <p>P = power (W)</p>
+                            <p>t = time (s)</p>
+                            <p>v = velocity (m/s)</p>
+                        </div>
+                        
+                        <h3>Momentum and Impulse</h3>
+                        <p>Momentum is the product of mass and velocity. Impulse is the change in momentum.</p>
+                        
+                        <div class="formula">
+                            <p>Momentum: p = m × v</p>
+                            <p>Impulse: J = F × t = Δp = m × Δv</p>
+                            <p>Conservation of Momentum: m₁v₁i + m₂v₂i = m₁v₁f + m₂v₂f</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A 60 kg person catches a 0.5 kg ball moving at 30 m/s. If the ball comes to rest, what velocity does the person acquire?</p>
+                            <p>By conservation of momentum:</p>
+                            <p>m<sub>ball</sub>v<sub>ball</sub> + m<sub>person</sub>v<sub>person,i</sub> = m<sub>ball</sub>v<sub>ball,f</sub> + m<sub>person</sub>v<sub>person,f</sub></p>
+                            <p>0.5 kg × 30 m/s + 60 kg × 0 m/s = 0.5 kg × 0 m/s + 60 kg × v<sub>person,f</sub></p>
+                            <p>15 kg·m/s = 60 kg × v<sub>person,f</sub></p>
+                            <p>v<sub>person,f</sub> = 15 kg·m/s ÷ 60 kg = 0.25 m/s</p>
+                        </div>
+                        
+                        <h3>Circular Motion</h3>
+                        <p>An object moving in a circle experiences centripetal acceleration toward the center of the circle.</p>
+                        
+                        <div class="formula">
+                            <p>Centripetal Acceleration: a<sub>c</sub> = v²/r = ω²r</p>
+                            <p>Centripetal Force: F<sub>c</sub> = ma<sub>c</sub> = mv²/r</p>
+                            <p>Angular Velocity: ω = v/r = 2πf</p>
+                            <p>Period: T = 2πr/v = 1/f</p>
+                            <p>where:</p>
+                            <p>ω = angular velocity (rad/s)</p>
+                            <p>f = frequency (Hz)</p>
+                            <p>T = period (s)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A 1,500 kg car travels around a circular track with a radius of 50 m at a speed of 20 m/s. Calculate the centripetal force required.</p>
+                            <p>F<sub>c</sub> = mv²/r = 1,500 kg × (20 m/s)² ÷ 50 m = 1,500 kg × 400 m²/s² ÷ 50 m = 12,000 N</p>
+                        </div>
+                        
+                        <h3>Simple Harmonic Motion</h3>
+                        <p>Simple harmonic motion (SHM) is a type of periodic motion where the restoring force is proportional to the displacement and in the opposite direction.</p>
+                        
+                        <div class="formula">
+                            <p>F = -kx</p>
+                            <p>ω² = k/m</p>
+                            <p>T = 2π√(m/k)</p>
+                            <p>f = 1/T = (1/2π)√(k/m)</p>
+                            <p>where:</p>
+                            <p>k = spring constant (N/m)</p>
+                            <p>x = displacement (m)</p>
+                        </div>
+                        
+                        <p>Examples of SHM include:</p>
+                        <ul>
+                            <li>A mass on a spring</li>
+                            <li>A pendulum (for small angles)</li>
+                            <li>Vibrating strings</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A mass of 0.2 kg is attached to a spring with a spring constant of 80 N/m. Calculate the period of oscillation.</p>
+                            <p>T = 2π√(m/k) = 2π√(0.2 kg / 80 N/m) = 2π√(0.0025 s²) = 2π × 0.05 s = 0.314 s</p>
+                        </div>
+                        
+                        <h3>Practice Problems</h3>
+                        <ol>
+                            <li>A 70 kg person climbs a flight of stairs 5 m high in 8 seconds. Calculate the power output.</li>
+                            <li>A 1,200 kg car moving at 25 m/s collides with a stationary 800 kg car. If they stick together after collision, what is their common velocity?</li>
+                            <li>A 0.5 kg mass is attached to a spring and oscillates with a period of 0.4 s. Calculate the spring constant.</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Solutions:</h4>
+                            <p>1. W = mgh = 70 kg × 9.8 m/s² × 5 m = 3,430 J. P = W/t = 3,430 J ÷ 8 s = 428.75 W</p>
+                            <p>2. By conservation of momentum: m₁v₁i + m₂v₂i = (m₁ + m₂)v<sub>f</sub>. 1,200 kg × 25 m/s + 800 kg × 0 m/s = (1,200 kg + 800 kg)v<sub>f</sub>. 30,000 kg·m/s = 2,000 kg × v<sub>f</sub>. v<sub>f</sub> = 15 m/s</p>
+                            <p>3. T = 2π√(m/k), so k = 4π²m/T². k = 4π² × 0.5 kg ÷ (0.4 s)² = 123.4 N/m</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 9 study notes would go here -->
+            </div>
+
+            <div id="grade10" class="grade-content">
+                <h2>Grade 10 Physics Notes</h2>
+                
+                <div id="g10-energy" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Energy Transformations</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Energy Transformation and Conservation</h3>
+                        <p>Energy transformation is the process of changing energy from one form to another. The law of conservation of energy states that energy cannot be created or destroyed, only transformed from one form to another.</p>
+                        
+                        <h3>Common Energy Transformations</h3>
+                        <ul>
+                            <li><strong>Electrical to Thermal</strong>: Electric heater, toaster</li>
+                            <li><strong>Electrical to Mechanical</strong>: Electric motor</li>
+                            <li><strong>Electrical to Light</strong>: Light bulb, LED</li>
+                            <li><strong>Chemical to Thermal</strong>: Burning fuel</li>
+                            <li><strong>Chemical to Electrical</strong>: Battery</li>
+                            <li><strong>Mechanical to Electrical</strong>: Generator, dynamo</li>
+                            <li><strong>Light to Electrical</strong>: Solar panel</li>
+                            <li><strong>Gravitational Potential to Kinetic</strong>: Falling object</li>
+                            <li><strong>Kinetic to Thermal</strong>: Friction</li>
+                        </ul>
+                        
+                        <h3>Efficiency</h3>
+                        <p>Efficiency is a measure of how much of the input energy is converted to useful output energy. It's usually expressed as a percentage.</p>
+                        
+                        <div class="formula">
+                            <p>Efficiency = (Useful output energy / Total input energy) × 100%</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A light bulb converts 5 J of electrical energy into 1 J of light energy and 4 J of thermal energy. Calculate its efficiency as a light source.</p>
+                            <p>Efficiency = (Useful output energy / Total input energy) × 100%</p>
+                            <p>Efficiency = (1 J / 5 J) × 100% = 20%</p>
+                        </div>
+                        
+                        <h3>Energy Resources</h3>
+                        <p>Energy resources can be classified as non-renewable or renewable:</p>
+                        
+                        <p><strong>Non-renewable Resources</strong>:</p>
+                        <ul>
+                            <li><strong>Fossil Fuels</strong> (coal, oil, natural gas): Formed from remains of plants and animals over millions of years</li>
+                            <li><strong>Nuclear Fuel</strong>: Uranium used in nuclear power plants</li>
+                        </ul>
+                        
+                        <p><strong>Renewable Resources</strong>:</p>
+                        <ul>
+                            <li><strong>Solar Energy</strong>: Energy from the sun</li>
+                            <li><strong>Wind Energy</strong>: Kinetic energy of moving air</li>
+                            <li><strong>Hydroelectric Energy</strong>: Energy from flowing water</li>
+                            <li><strong>Geothermal Energy</strong>: Heat energy from within the Earth</li>
+                            <li><strong>Biomass</strong>: Energy from organic materials</li>
+                            <li><strong>Tidal Energy</strong>: Energy from ocean tides</li>
+                        </ul>
+                        
+                        <h3>Environmental Impact</h3>
+                        <p>Different energy sources have varying environmental impacts:</p>
+                        <ul>
+                            <li><strong>Fossil Fuels</strong>: Produce carbon dioxide when burned, contributing to climate change</li>
+                            <li><strong>Nuclear Energy</strong>: Produces radioactive waste that requires safe storage</li>
+                            <li><strong>Renewable Energy</strong>: Generally has lower environmental impact but may have issues like land use (solar farms), noise (wind turbines), or habitat disruption (hydroelectric dams)</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A hydroelectric power plant converts 80% of the gravitational potential energy of falling water into electrical energy. If water falls from a height of 50 m at a rate of 1,000 kg/s, calculate the electrical power output.</p>
+                            <p>Input power = Rate of work done by gravity = mgh per second = 1,000 kg/s × 9.8 m/s² × 50 m = 490,000 W</p>
+                            <p>Electrical power output = 80% of input power = 0.8 × 490,000 W = 392,000 W = 392 kW</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 10 study notes would go here -->
+            </div>
+
+            <div id="grade11" class="grade-content">
+                <h2>Grade 11 Physics Notes</h2>
+                
+                <div id="g11-nuclear" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Nuclear Physics</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Atomic Structure</h3>
+                        <p>Atoms consist of a nucleus (containing protons and neutrons) surrounded by electrons. The nucleus accounts for nearly all of the atom's mass but only a tiny fraction of its volume.</p>
+                        
+                        <ul>
+                            <li><strong>Protons</strong>: Positively charged particles, mass ≈ 1.673 × 10<sup>-27</sup> kg</li>
+                            <li><strong>Neutrons</strong>: Neutral particles, mass ≈ 1.675 × 10<sup>-27</sup> kg</li>
+                            <li><strong>Electrons</strong>: Negatively charged particles, mass ≈ 9.109 × 10<sup>-31</sup> kg (about 1/1836 of a proton)</li>
+                        </ul>
+                        
+                        <p><strong>Atomic Number (Z)</strong>: Number of protons in the nucleus</p>
+                        <p><strong>Mass Number (A)</strong>: Number of protons + neutrons in the nucleus</p>
+                        <p><strong>Isotopes</strong>: Atoms with the same number of protons but different numbers of neutrons</p>
+                        
+                        <h3>Nuclear Forces</h3>
+                        <p>The nucleus is held together by the strong nuclear force, which overcomes the electrostatic repulsion between positively charged protons at short distances.</p>
+                        
+                        <h3>Radioactivity</h3>
+                        <p>Radioactivity is the spontaneous emission of radiation from unstable nuclei. The three main types of radiation are:</p>
+                        
+                        <ul>
+                            <li><strong>Alpha (α) radiation</strong>: Helium nuclei (2 protons, 2 neutrons), highly ionizing but not very penetrating</li>
+                            <li><strong>Beta (β) radiation</strong>: Electrons, moderately ionizing and penetrating</li>
+                            <li><strong>Gamma (γ) radiation</strong>: High-energy electromagnetic waves, weakly ionizing but highly penetrating</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Alpha decay: <sup>A</sup><sub>Z</sub>X → <sup>A-4</sup><sub>Z-2</sub>Y + <sup>4</sup><sub>2</sub>He</p>
+                            <p>Beta decay (β-): <sup>A</sup><sub>Z</sub>X → <sup>A</sup><sub>Z+1</sub>Y + <sup>0</sup><sub>-1</sub>e + ῡ</p>
+                            <p>Gamma decay: <sup>A</sup><sub>Z</sub>X* → <sup>A</sup><sub>Z</sub>X + γ</p>
+                        </div>
+                        
+                        <h3>Half-life</h3>
+                        <p>The half-life of a radioactive isotope is the time taken for half of the unstable nuclei in a sample to decay.</p>
+                        
+                        <div class="formula">
+                            <p>N = N₀ × (1/2)<sup>t/T₁/₂</sup></p>
+                            <p>where:</p>
+                            <p>N = number of undecayed nuclei remaining</p>
+                            <p>N₀ = initial number of undecayed nuclei</p>
+                            <p>t = time elapsed</p>
+                            <p>T₁/₂ = half-life</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A sample initially contains 4.0 × 10<sup>20</sup> atoms of a radioactive isotope with a half-life of 5 days. How many atoms remain after 20 days?</p>
+                            <p>N = N₀ × (1/2)<sup>t/T₁/₂</sup> = 4.0 × 10<sup>20</sup> × (1/2)<sup>20/5</sup> = 4.0 × 10<sup>20</sup> × (1/2)<sup>4</sup> = 4.0 × 10<sup>20</sup> × (1/16) = 2.5 × 10<sup>19</sup> atoms</p>
+                        </div>
+                        
+                        <h3>Nuclear Reactions</h3>
+                        <p><strong>Nuclear Fission</strong>: The splitting of a heavy nucleus into lighter nuclei with the release of energy. Used in nuclear power plants.</p>
+                        
+                        <div class="formula">
+                            <p>Example of fission: <sup>235</sup><sub>92</sub>U + <sup>1</sup><sub>0</sub>n → <sup>141</sup><sub>56</sub>Ba + <sup>92</sup><sub>36</sub>Kr + 3<sup>1</sup><sub>0</sub>n + energy</p>
+                        </div>
+                        
+                        <p><strong>Nuclear Fusion</strong>: The combining of light nuclei to form a heavier nucleus with the release of energy. The process that powers the sun.</p>
+                        
+                        <div class="formula">
+                            <p>Example of fusion: <sup>2</sup><sub>1</sub>H + <sup>3</sup><sub>1</sub>H → <sup>4</sup><sub>2</sub>He + <sup>1</sup><sub>0</sub>n + energy</p>
+                        </div>
+                        
+                        <h3>Mass-Energy Equivalence</h3>
+                        <p>Einstein's famous equation relates mass and energy:</p>
+                        
+                        <div class="formula">
+                            <p>E = mc²</p>
+                            <p>where:</p>
+                            <p>E = energy (J)</p>
+                            <p>m = mass (kg)</p>
+                            <p>c = speed of light (3 × 10<sup>8</sup> m/s)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the energy released when 0.0005 kg of mass is converted to energy in a nuclear reaction.</p>
+                            <p>E = mc² = 0.0005 kg × (3 × 10<sup>8</sup> m/s)² = 0.0005 kg × 9 × 10<sup>16</sup> m²/s² = 4.5 × 10<sup>13</sup> J</p>
+                            <p>This is equivalent to about 10,000 tons of TNT!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g11-relativity" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Introduction to Relativity</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Special Relativity</h3>
+                        <p>Einstein's theory of special relativity, published in 1905, is based on two postulates:</p>
+                        
+                        <ol>
+                            <li>The laws of physics are the same in all inertial reference frames (frames moving at constant velocity relative to each other).</li>
+                            <li>The speed of light in vacuum is the same for all observers, regardless of their motion or the motion of the light source.</li>
+                        </ol>
+                        
+                        <h3>Time Dilation</h3>
+                        <p>Moving clocks run slower compared to stationary clocks. This effect becomes significant only at speeds approaching the speed of light.</p>
+                        
+                        <div class="formula">
+                            <p>Δt = Δt₀/√(1 - v²/c²)</p>
+                            <p>where:</p>
+                            <p>Δt = time interval measured by a stationary observer</p>
+                            <p>Δt₀ = proper time interval (time measured in the frame where events occur at the same location)</p>
+                            <p>v = relative velocity between the frames</p>
+                            <p>c = speed of light (3 × 10<sup>8</sup> m/s)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A spacecraft travels at 0.8c relative to Earth. If a clock on the spacecraft measures 1 hour, how much time passes on Earth?</p>
+                            <p>Δt = Δt₀/√(1 - v²/c²) = 1 hour/√(1 - (0.8c)²/c²) = 1 hour/√(1 - 0.64) = 1 hour/√0.36 = 1 hour/0.6 = 1.67 hours</p>
+                        </div>
+                        
+                        <h3>Length Contraction</h3>
+                        <p>Moving objects appear shortened in the direction of motion.</p>
+                        
+                        <div class="formula">
+                            <p>L = L₀ × √(1 - v²/c²)</p>
+                            <p>where:</p>
+                            <p>L = length measured by a stationary observer</p>
+                            <p>L₀ = proper length (length measured in the object's rest frame)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A 100-meter-long spacecraft travels at 0.6c relative to Earth. What is its length as measured by an observer on Earth?</p>
+                            <p>L = L₀ × √(1 - v²/c²) = 100 m × √(1 - (0.6c)²/c²) = 100 m × √(1 - 0.36) = 100 m × √0.64 = 100 m × 0.8 = 80 m</p>
+                        </div>
+                        
+                        <h3>Relativistic Mass and Energy</h3>
+                        <p>As an object's speed increases, its mass effectively increases from the perspective of a stationary observer.</p>
+                        
+                        <div class="formula">
+                            <p>m = m₀/√(1 - v²/c²)</p>
+                            <p>where:</p>
+                            <p>m = relativistic mass</p>
+                            <p>m₀ = rest mass</p>
+                        </div>
+                        
+                        <p>The famous mass-energy equivalence formula:</p>
+                        
+                        <div class="formula">
+                            <p>E = mc²</p>
+                            <p>Total energy: E = mc² = m₀c²/√(1 - v²/c²)</p>
+                            <p>Rest energy: E₀ = m₀c²</p>
+                            <p>Kinetic energy: K = E - E₀ = m₀c²(1/√(1 - v²/c²) - 1)</p>
+                        </div>
+                        
+                        <h3>General Relativity</h3>
+                        <p>Einstein's theory of general relativity, published in 1915, describes gravity as a curvature of spacetime caused by mass and energy.</p>
+                        
+                        <p>Key concepts include:</p>
+                        <ul>
+                            <li>Spacetime is a four-dimensional continuum (three space dimensions plus time)</li>
+                            <li>Mass and energy curve spacetime</li>
+                            <li>Objects move along geodesics (shortest paths) in curved spacetime</li>
+                            <li>Gravity is not a force but a manifestation of spacetime curvature</li>
+                        </ul>
+                        
+                        <h3>Experimental Confirmations</h3>
+                        <p>Several observations have confirmed Einstein's theories:</p>
+                        <ul>
+                            <li>Bending of light around the Sun during solar eclipses</li>
+                            <li>Gravitational redshift (light loses energy climbing out of a gravitational field)</li>
+                            <li>Precession of Mercury's orbit</li>
+                            <li>Gravitational waves (detected by LIGO in 2015)</li>
+                            <li>Time dilation in GPS satellites (requires relativistic corrections)</li>
+                        </ul>
+                        
+                        <h3>The Twin Paradox</h3>
+                        <p>The twin paradox is a thought experiment in special relativity:</p>
+                        <ul>
+                            <li>One twin stays on Earth while the other travels on a high-speed journey through space</li>
+                            <li>Due to time dilation, the traveling twin ages less than the Earth-bound twin</li>
+                            <li>This is not actually a paradox because the traveling twin experiences acceleration (changing reference frames), breaking the symmetry</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A twin travels to a star 4 light-years away at 0.8c, then returns at the same speed. How much younger will the traveling twin be compared to the Earth-bound twin when they reunite?</p>
+                            <p>Time in Earth frame: 2 × (4 light-years / 0.8c) = 10 years</p>
+                            <p>Time in traveler's frame (each way): Δt₀ = Δt × √(1 - v²/c²) = 5 years × √(1 - 0.64) = 5 years × 0.6 = 3 years</p>
+                            <p>Total traveler time: 2 × 3 = 6 years</p>
+                            <p>Age difference: 10 - 6 = 4 years</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 11 study notes would go here -->
+            </div>
+        </div>
+    </section>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="math.html">Mathematics</a></li>
+                            <li><a href="physics.html">Physics</a></li>
+                            <li><a href="chemistry.html">Chemistry</a></li>
+                            <li><a href="biology.html">Biology</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="#" data-target="grade7">Grade 7</a></li>
+                            <li><a href="#" data-target="grade8">Grade 8</a></li>
+                            <li><a href="#" data-target="grade9">Grade 9</a></li>
+                            <li><a href="#" data-target="grade10">Grade 10</a></li>
+                            <li><a href="#" data-target="grade11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../premium/index.html">Premium Content</a></li>
+                            <li><a href="../index.html#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="../index.html#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/subscription.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab Navigation for Grade Levels
+            const tabButtons = document.querySelectorAll('.tab-btn[data-target]');
+            const gradeContents = document.querySelectorAll('.grade-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    gradeContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    const targetId = button.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // Footer grade links
+            const footerGradeLinks = document.querySelectorAll('.footer-column a[data-target]');
+            
+            footerGradeLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    
+                    // Activate the corresponding tab
+                    document.querySelector(`.tab-btn[data-target="${targetId}"]`).click();
+                    
+                    // Scroll to the grade content
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Donation Modal
+            const donateFooter = document.getElementById('donateFooter');
+            if(donateFooter) {
+                donateFooter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('This feature would redirect to a donation page in a real application.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

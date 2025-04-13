@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes Hub - Educational Resources for Grades 7-11</title>
+    <meta name="description" content="Access comprehensive study notes and cheat sheets for students in grades 7-11. Enhance your learning with our educational resources.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="subjects/math.html" class="math-color">Mathematics</a></li>
+                            <li><a href="subjects/physics.html" class="physics-color">Physics</a></li>
+                            <li><a href="subjects/chemistry.html" class="chemistry-color">Chemistry</a></li>
+                            <li><a href="subjects/biology.html" class="biology-color">Biology</a></li>
+                            <li><a href="subjects/history.html" class="history-color">History</a></li>
+                            <li><a href="subjects/literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#grades">Grades 7-11</a></li>
+                    <li><a href="premium/index.html">Premium Content</a></li>
+                    <li><a href="#favorites" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Study Smarter, Not Harder</h2>
+                <p>Access comprehensive study notes and cheat sheets designed specifically for grades 7-11</p>
+                <div class="hero-buttons">
+                    <a href="#subjects" class="btn btn-primary">Browse Subjects</a>
+                    <a href="premium/index.html" class="btn btn-secondary">Get Premium Access</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Welcome to Study Notes Hub</h2>
+            <p>We provide concise, well-organized study materials specifically designed for students in grades 7-11. Our educational resources are created by experienced teachers and subject experts to help you excel in your studies.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-book"></i>
+                    <h3>Comprehensive Notes</h3>
+                    <p>Clear and concise study notes on all major subjects</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Downloadable Cheat Sheets</h3>
+                    <p>Quick reference guides for exams and assessments</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Grade-Specific Content</h3>
+                    <p>Materials tailored to each grade level from 7-11</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-crown"></i>
+                    <h3>Premium Resources</h3>
+                    <p>Expanded content and practice exercises for subscribers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="subjects" class="subjects">
+        <div class="container">
+            <h2>Browse by Subject</h2>
+            <div class="subject-grid">
+                <a href="subjects/math.html" class="subject-card math">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Mathematics</h3>
+                    <p>Algebra, Geometry, Calculus and more</p>
+                </a>
+                <a href="subjects/physics.html" class="subject-card physics">
+                    <i class="fas fa-atom"></i>
+                    <h3>Physics</h3>
+                    <p>Mechanics, Electricity, Optics and more</p>
+                </a>
+                <a href="subjects/chemistry.html" class="subject-card chemistry">
+                    <i class="fas fa-flask"></i>
+                    <h3>Chemistry</h3>
+                    <p>Periodic table, Chemical reactions and more</p>
+                </a>
+                <a href="subjects/biology.html" class="subject-card biology">
+                    <i class="fas fa-dna"></i>
+                    <h3>Biology</h3>
+                    <p>Cell biology, Genetics, Human anatomy and more</p>
+                </a>
+                <a href="subjects/history.html" class="subject-card history">
+                    <i class="fas fa-landmark"></i>
+                    <h3>History</h3>
+                    <p>World history, Cultural development and more</p>
+                </a>
+                <a href="subjects/literature.html" class="subject-card literature">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Literature</h3>
+                    <p>Classic works, Literary analysis and more</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="grades" class="grades">
+        <div class="container">
+            <h2>Study Materials by Grade</h2>
+            <div class="grade-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-grade="7">Grade 7</button>
+                    <button class="tab-btn" data-grade="8">Grade 8</button>
+                    <button class="tab-btn" data-grade="9">Grade 9</button>
+                    <button class="tab-btn" data-grade="10">Grade 10</button>
+                    <button class="tab-btn" data-grade="11">Grade 11</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="grade7">
+                        <div class="grade-materials">
+                            <div class="grade-material">
+                                <h3>Mathematics</h3>
+                                <ul>
+                                    <li><a href="subjects/math.html#g7-algebra">Algebra Basics</a></li>
+                                    <li><a href="subjects/math.html#g7-geometry">Introduction to Geometry</a></li>
+                                    <li><a href="subjects/math.html#g7-statistics">Basic Statistics</a></li>
+                                    <li><a href="subjects/math.html#g7-fractions" class="premium-content">Advanced Fractions <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="grade-material">
+                                <h3>Science</h3>
+                                <ul>
+                                    <li><a href="subjects/biology.html#g7-cells">Cell Structure</a></li>
+                                    <li><a href="subjects/physics.html#g7-forces">Forces and Motion</a></li>
+                                    <li><a href="subjects/chemistry.html#g7-matter">States of Matter</a></li>
+                                    <li><a href="subjects/physics.html#g7-energy" class="premium-content">Energy Types <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="grade8">
+                        <div class="grade-materials">
+                            <div class="grade-material">
+                                <h3>Mathematics</h3>
+                                <ul>
+                                    <li><a href="subjects/math.html#g8-equations">Linear Equations</a></li>
+                                    <li><a href="subjects/math.html#g8-functions">Functions</a></li>
+                                    <li><a href="subjects/math.html#g8-pythagorean">Pythagorean Theorem</a></li>
+                                    <li><a href="subjects/math.html#g8-transformations" class="premium-content">Geometric Transformations <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="grade-material">
+                                <h3>Science</h3>
+                                <ul>
+                                    <li><a href="subjects/biology.html#g8-systems">Body Systems</a></li>
+                                    <li><a href="subjects/physics.html#g8-electricity">Basic Electricity</a></li>
+                                    <li><a href="subjects/chemistry.html#g8-elements">Elements and Compounds</a></li>
+                                    <li><a href="subjects/biology.html#g8-ecology" class="premium-content">Ecology Fundamentals <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="grade9">
+                        <div class="grade-materials">
+                            <div class="grade-material">
+                                <h3>Mathematics</h3>
+                                <ul>
+                                    <li><a href="subjects/math.html#g9-quadratic">Quadratic Equations</a></li>
+                                    <li><a href="subjects/math.html#g9-trigonometry">Intro to Trigonometry</a></li>
+                                    <li><a href="subjects/math.html#g9-probability">Probability</a></li>
+                                    <li><a href="subjects/math.html#g9-polynomials" class="premium-content">Polynomial Operations <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="grade-material">
+                                <h3>Science</h3>
+                                <ul>
+                                    <li><a href="subjects/biology.html#g9-genetics">Genetics Basics</a></li>
+                                    <li><a href="subjects/physics.html#g9-waves">Waves and Sound</a></li>
+                                    <li><a href="subjects/chemistry.html#g9-reactions">Chemical Reactions</a></li>
+                                    <li><a href="subjects/physics.html#g9-mechanics" class="premium-content">Advanced Mechanics <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="grade10">
+                        <div class="grade-materials">
+                            <div class="grade-material">
+                                <h3>Mathematics</h3>
+                                <ul>
+                                    <li><a href="subjects/math.html#g10-functions">Advanced Functions</a></li>
+                                    <li><a href="subjects/math.html#g10-trigonometry">Trigonometric Functions</a></li>
+                                    <li><a href="subjects/math.html#g10-sequences">Sequences and Series</a></li>
+                                    <li><a href="subjects/math.html#g10-vectors" class="premium-content">Vector Operations <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="grade-material">
+                                <h3>Science</h3>
+                                <ul>
+                                    <li><a href="subjects/biology.html#g10-evolution">Theory of Evolution</a></li>
+                                    <li><a href="subjects/physics.html#g10-energy">Energy Transformations</a></li>
+                                    <li><a href="subjects/chemistry.html#g10-organic">Intro to Organic Chemistry</a></li>
+                                    <li><a href="subjects/chemistry.html#g10-solutions" class="premium-content">Chemical Solutions <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="grade11">
+                        <div class="grade-materials">
+                            <div class="grade-material">
+                                <h3>Mathematics</h3>
+                                <ul>
+                                    <li><a href="subjects/math.html#g11-calculus">Intro to Calculus</a></li>
+                                    <li><a href="subjects/math.html#g11-probability">Advanced Probability</a></li>
+                                    <li><a href="subjects/math.html#g11-stats">Statistical Analysis</a></li>
+                                    <li><a href="subjects/math.html#g11-matrices" class="premium-content">Matrix Operations <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="grade-material">
+                                <h3>Science</h3>
+                                <ul>
+                                    <li><a href="subjects/biology.html#g11-biochemistry">Biochemistry</a></li>
+                                    <li><a href="subjects/physics.html#g11-nuclear">Nuclear Physics</a></li>
+                                    <li><a href="subjects/chemistry.html#g11-equilibrium">Chemical Equilibrium</a></li>
+                                    <li><a href="subjects/physics.html#g11-relativity" class="premium-content">Introduction to Relativity <i class="fas fa-crown"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="favorites" class="favorites-section hidden">
+        <div class="container">
+            <h2>Your Saved Favorites</h2>
+            <div id="favorites-list" class="favorites-grid">
+                <!-- Favorites will be loaded here by JavaScript -->
+                <div class="empty-favorites">
+                    <i class="fas fa-bookmark"></i>
+                    <p>You haven't saved any favorites yet. Click the bookmark icon on any study note to add it to your favorites.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-callout">
+        <div class="container">
+            <div class="premium-content">
+                <h2>Unlock Premium Content</h2>
+                <p>Get access to expanded study materials, downloadable PDF cheat sheets, and advanced practice problems.</p>
+                <ul class="premium-features">
+                    <li><i class="fas fa-file-pdf"></i> Downloadable PDF study guides</li>
+                    <li><i class="fas fa-tasks"></i> Advanced practice exercises</li>
+                    <li><i class="fas fa-check-circle"></i> Step-by-step solution walkthroughs</li>
+                    <li><i class="fas fa-star"></i> Exclusive exam preparation materials</li>
+                </ul>
+                <a href="premium/index.html" class="btn btn-premium">Upgrade to Premium</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="donation">
+        <div class="container">
+            <div class="donation-content">
+                <h2>Support Our Work</h2>
+                <p>If you find our study materials helpful, consider buying us a coffee. Your support helps us create more quality educational content.</p>
+                <button id="donateBtn" class="btn btn-donate"><i class="fas fa-mug-hot"></i> Buy Me a Coffee</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Support Our Educational Content</h2>
+            <p>Your contribution helps us create more quality study materials.</p>
+            <div class="donation-options">
+                <button class="donation-option" data-amount="3">₴50 <span>Small Coffee</span></button>
+                <button class="donation-option" data-amount="5">₴100 <span>Large Coffee</span></button>
+                <button class="donation-option" data-amount="10">₴200 <span>Coffee & Snack</span></button>
+                <div class="custom-donation">
+                    <label for="customAmount">Custom Amount (₴):</label>
+                    <input type="number" id="customAmount" min="10" value="100">
+                </div>
+            </div>
+            <button id="processDonation" class="btn btn-primary">Donate</button>
+            <div class="donation-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for your support! Your contribution helps us create more educational content.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+                <button class="btn btn-secondary" id="goToPremium">Go to Premium Content</button>
+            </div>
+            
+            <div class="payment-method">
+                <h3>Оплата карткою</h3>
+                <div class="card-details">
+                    <div class="card-number">
+                        <p><strong>Номер картки:</strong> 4441 1110 6594 7057</p>
+                    </div>
+                    <div class="payment-instructions">
+                        <p>Після оплати надішліть квитанцію на нашу електронну пошту для активації преміум-доступу.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="subjects/math.html">Mathematics</a></li>
+                            <li><a href="subjects/physics.html">Physics</a></li>
+                            <li><a href="subjects/chemistry.html">Chemistry</a></li>
+                            <li><a href="subjects/biology.html">Biology</a></li>
+                            <li><a href="subjects/history.html">History</a></li>
+                            <li><a href="subjects/literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="#grades" data-grade="7">Grade 7</a></li>
+                            <li><a href="#grades" data-grade="8">Grade 8</a></li>
+                            <li><a href="#grades" data-grade="9">Grade 9</a></li>
+                            <li><a href="#grades" data-grade="10">Grade 10</a></li>
+                            <li><a href="#grades" data-grade="11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="premium/index.html">Premium Content</a></li>
+                            <li><a href="#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/pdf-generator.js"></script>
+    <script src="js/subscription.js"></script>
+    <script src="js/favorites.js"></script>
+</body>
+</html>
