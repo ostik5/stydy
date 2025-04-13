@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Content - Study Notes Hub</title>
+    <meta name="description" content="Access premium educational resources, downloadable PDF cheat sheets, and advanced practice problems for grades 7-11.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        .premium-header {
+            background: linear-gradient(rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0.7)), url('https://source.unsplash.com/random/1200x600/?study') no-repeat center center/cover;
+            color: #333;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .premium-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .premium-benefits {
+            background-color: #fff;
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .benefit-card {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            text-align: center;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefit-card i {
+            font-size: 3rem;
+            color: var(--premium-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .premium-content-section {
+            background-color: var(--background-color);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .premium-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .premium-item {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .premium-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .premium-item-header {
+            background-color: var(--premium-color);
+            color: #333;
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .premium-item-header h3 {
+            margin-bottom: 0;
+            color: #333;
+        }
+        
+        .premium-item-content {
+            padding: var(--spacing-md);
+        }
+        
+        .premium-item-content ul {
+            margin-top: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .premium-item-content ul li {
+            margin-bottom: var(--spacing-xs);
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+        
+        .premium-item-content ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        .subscription-info {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .subscription-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+        
+        .cancel-subscription {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .cancel-subscription:hover {
+            background-color: #d32f2f;
+        }
+        
+        .premium-locked-message {
+            text-align: center;
+            padding: var(--spacing-xl);
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius-md);
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .premium-locked-message i {
+            font-size: 3rem;
+            color: var(--premium-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .premium-card-details {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: #f0f0f0;
+            border-radius: var(--border-radius-md);
+            text-align: center;
+        }
+        
+        .premium-card-number {
+            font-size: var(--font-lg);
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: var(--spacing-sm);
+            border: 1px dashed var(--accent-color);
+            display: inline-block;
+            margin: var(--spacing-sm) 0;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="../subjects/math.html" class="math-color">Mathematics</a></li>
+                            <li><a href="../subjects/physics.html" class="physics-color">Physics</a></li>
+                            <li><a href="../subjects/chemistry.html" class="chemistry-color">Chemistry</a></li>
+                            <li><a href="../subjects/biology.html" class="biology-color">Biology</a></li>
+                            <li><a href="../subjects/history.html" class="history-color">History</a></li>
+                            <li><a href="../subjects/literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#grades">Grades 7-11</a></li>
+                    <li><a href="index.html" class="active">Premium Content</a></li>
+                    <li><a href="#" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="premium-header">
+        <div class="container">
+            <h1>Premium Study Resources</h1>
+            <p>Advanced educational materials to help you excel in your studies</p>
+        </div>
+    </div>
+
+    <section class="premium-benefits">
+        <div class="container">
+            <h2>Benefits of Premium Membership</h2>
+            <p>Our premium membership unlocks a wide range of educational resources designed to enhance your learning experience.</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>Downloadable PDF Study Guides</h3>
+                    <p>Download comprehensive study guides and cheat sheets in PDF format for easy reference during your studies.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Advanced Practice Exercises</h3>
+                    <p>Access challenging practice problems that help you master complex concepts and prepare for exams.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Step-by-Step Solutions</h3>
+                    <p>Get detailed explanations for all practice problems, helping you understand the solution process.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Exam Preparation Materials</h3>
+                    <p>Special materials designed to help you prepare for standardized tests and school exams.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-content-section">
+        <div class="container">
+            <h2>Premium Content</h2>
+            
+            <div id="premium-locked-content" class="premium-locked-message">
+                <i class="fas fa-crown"></i>
+                <h3>Premium Content Locked</h3>
+                <p>Subscribe to our premium plan to unlock all premium content and features.</p>
+                <button class="btn btn-primary open-subscription-modal">Subscribe Now</button>
+                
+                <div class="premium-card-details">
+                    <h4>Оплата карткою:</h4>
+                    <div class="premium-card-number">4441 1110 6594 7057</div>
+                    <p>Після оплати надішліть квитанцію на нашу електронну пошту для активації преміум-доступу.</p>
+                </div>
+            </div>
+            
+            <div id="premium-unlocked-content" class="hidden">
+                <div class="premium-content-grid">
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Advanced Mathematics</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>Comprehensive study materials for advanced mathematics topics.</p>
+                            <ul>
+                                <li>Advanced Calculus Concepts</li>
+                                <li>Complex Number Theory</li>
+                                <li>Multivariable Functions</li>
+                                <li>Advanced Probability</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Physics Mastery</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>In-depth physics study guides with detailed examples.</p>
+                            <ul>
+                                <li>Advanced Mechanics</li>
+                                <li>Electromagnetism</li>
+                                <li>Quantum Physics Introduction</li>
+                                <li>Thermodynamics</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Chemistry Compendium</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>Detailed chemistry notes and reaction guides.</p>
+                            <ul>
+                                <li>Organic Chemistry Advanced</li>
+                                <li>Chemical Equilibrium</li>
+                                <li>Redox Reactions</li>
+                                <li>Atomic Structure</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Biology Excellence</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>Comprehensive biology study materials with visual aids.</p>
+                            <ul>
+                                <li>Cell Biology Advanced</li>
+                                <li>Genetics and Inheritance</li>
+                                <li>Human Physiology</li>
+                                <li>Evolutionary Theory</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Exam Preparation</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>Special materials designed for exam success.</p>
+                            <ul>
+                                <li>Practice Exams with Solutions</li>
+                                <li>Time Management Techniques</li>
+                                <li>Question Analysis Strategies</li>
+                                <li>Memory Techniques</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-item-header">
+                            <h3>Problem Solving</h3>
+                        </div>
+                        <div class="premium-item-content">
+                            <p>Advanced problem-solving techniques across all subjects.</p>
+                            <ul>
+                                <li>Critical Thinking Approaches</li>
+                                <li>Mathematical Problem Solving</li>
+                                <li>Scientific Method Application</li>
+                                <li>Logic and Reasoning</li>
+                            </ul>
+                            <a href="#" class="btn btn-secondary download-pdf">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subscription-info">
+                    <h3>Your Premium Subscription</h3>
+                    <div id="subscription-info">
+                        <p>Loading subscription information...</p>
+                    </div>
+                    <div class="subscription-actions">
+                        <button class="btn btn-primary" id="download-all">Download All Resources</button>
+                        <button class="btn cancel-subscription hidden" id="cancel-subscription">Cancel Subscription</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="favorites" class="favorites-section hidden">
+        <div class="container">
+            <h2>Your Saved Favorites</h2>
+            <div id="favorites-list" class="favorites-grid">
+                <!-- Favorites will be loaded here by JavaScript -->
+                <div class="empty-favorites">
+                    <i class="fas fa-bookmark"></i>
+                    <p>You haven't saved any favorites yet. Click the bookmark icon on any study note to add it to your favorites.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="../subjects/math.html">Mathematics</a></li>
+                            <li><a href="../subjects/physics.html">Physics</a></li>
+                            <li><a href="../subjects/chemistry.html">Chemistry</a></li>
+                            <li><a href="../subjects/biology.html">Biology</a></li>
+                            <li><a href="../subjects/history.html">History</a></li>
+                            <li><a href="../subjects/literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="../index.html#grades" data-grade="7">Grade 7</a></li>
+                            <li><a href="../index.html#grades" data-grade="8">Grade 8</a></li>
+                            <li><a href="../index.html#grades" data-grade="9">Grade 9</a></li>
+                            <li><a href="../index.html#grades" data-grade="10">Grade 10</a></li>
+                            <li><a href="../index.html#grades" data-grade="11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Premium Content</a></li>
+                            <li><a href="#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="../index.html#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+                <button class="btn btn-secondary" id="goToPremium">Go to Premium Content</button>
+            </div>
+            
+            <div class="payment-method">
+                <h3>Оплата карткою</h3>
+                <div class="card-details">
+                    <div class="card-number">
+                        <p><strong>Номер картки:</strong> 4441 1110 6594 7057</p>
+                    </div>
+                    <div class="payment-instructions">
+                        <p>Після оплати надішліть квитанцію на нашу електронну пошту для активації преміум-доступу.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/subscription.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check premium subscription status
+            const hasPremium = localStorage.getItem('premiumSubscription') === 'active';
+            const premiumLockedContent = document.getElementById('premium-locked-content');
+            const premiumUnlockedContent = document.getElementById('premium-unlocked-content');
+            
+            if(hasPremium) {
+                premiumLockedContent.classList.add('hidden');
+                premiumUnlockedContent.classList.remove('hidden');
+            } else {
+                premiumLockedContent.classList.remove('hidden');
+                premiumUnlockedContent.classList.add('hidden');
+            }
+            
+            // Open subscription modal
+            const openSubscriptionButtons = document.querySelectorAll('.open-subscription-modal');
+            const subscriptionModal = document.getElementById('subscriptionModal');
+            
+            openSubscriptionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if(subscriptionModal) {
+                        subscriptionModal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            
+            // Download All button
+            const downloadAllBtn = document.getElementById('download-all');
+            if(downloadAllBtn) {
+                downloadAllBtn.addEventListener('click', function() {
+                    alert('Download started for all premium resources. Please check your downloads folder.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

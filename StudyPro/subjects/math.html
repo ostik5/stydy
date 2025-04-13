@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - Study Notes Hub</title>
+    <meta name="description" content="Comprehensive math study notes and cheat sheets for grades 7-11. Learn algebra, geometry, calculus and more.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Subject-specific styles */
+        .subject-header {
+            background: linear-gradient(rgba(74, 111, 165, 0.9), rgba(74, 111, 165, 0.8)), url('https://source.unsplash.com/random/1200x600/?mathematics') no-repeat center center/cover;
+            color: #fff;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .study-note {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .study-note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .study-note-header h2 {
+            color: var(--math-color);
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .study-note-content {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .formula {
+            background-color: #f0f4f8;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--math-color);
+            margin: var(--spacing-md) 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .example h4 {
+            color: var(--math-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .bookmark-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-lg);
+            color: var(--math-color);
+        }
+        
+        .pdf-download-container {
+            text-align: right;
+            margin-top: var(--spacing-md);
+        }
+        
+        .pdf-download-btn {
+            font-size: var(--font-sm);
+        }
+        
+        .premium-locked {
+            position: relative;
+            background-color: #f0f0f0;
+            color: #888;
+        }
+        
+        .premium-locked:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .premium-locked .fa-crown {
+            color: var(--premium-color);
+            margin-left: var(--spacing-xs);
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .notification {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success i {
+            color: #4caf50;
+        }
+        
+        .notification.error i {
+            color: #f44336;
+        }
+        
+        .notification i {
+            margin-right: var(--spacing-sm);
+            font-size: var(--font-lg);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="math.html" class="math-color active">Mathematics</a></li>
+                            <li><a href="physics.html" class="physics-color">Physics</a></li>
+                            <li><a href="chemistry.html" class="chemistry-color">Chemistry</a></li>
+                            <li><a href="biology.html" class="biology-color">Biology</a></li>
+                            <li><a href="history.html" class="history-color">History</a></li>
+                            <li><a href="literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#grades">Grades 7-11</a></li>
+                    <li><a href="../premium/index.html">Premium Content</a></li>
+                    <li><a href="#" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="subject-header">
+        <div class="container">
+            <h1>Mathematics</h1>
+            <p>Study notes and cheat sheets for algebra, geometry, calculus and more</p>
+        </div>
+    </div>
+
+    <section class="subject-page">
+        <div class="container">
+            <div class="grade-selector">
+                <h2>Select Grade Level</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="grade7">Grade 7</button>
+                    <button class="tab-btn" data-target="grade8">Grade 8</button>
+                    <button class="tab-btn" data-target="grade9">Grade 9</button>
+                    <button class="tab-btn" data-target="grade10">Grade 10</button>
+                    <button class="tab-btn" data-target="grade11">Grade 11</button>
+                </div>
+            </div>
+
+            <div id="grade7" class="grade-content active">
+                <h2>Grade 7 Math Notes</h2>
+                
+                <div id="g7-algebra" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Algebra Basics</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Variables and Expressions</h3>
+                        <p>Variables are symbols (usually letters) that represent unspecified numbers. Algebraic expressions combine variables and numbers using operations like addition, subtraction, multiplication, and division.</p>
+                        
+                        <div class="formula">
+                            <p>Expression: 3x + 5y - 2</p>
+                            <p>Terms: 3x, 5y, -2</p>
+                            <p>Coefficients: 3, 5, -2</p>
+                            <p>Variables: x, y</p>
+                        </div>
+                        
+                        <h3>Evaluating Expressions</h3>
+                        <p>To evaluate an expression, substitute the values of the variables and perform the operations.</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Evaluate 3x + 5y - 2 when x = 2 and y = 4</p>
+                            <p>Substitute: 3(2) + 5(4) - 2 = 6 + 20 - 2 = 24</p>
+                        </div>
+                        
+                        <h3>Simplifying Expressions</h3>
+                        <p>To simplify an expression, combine like terms (terms with the same variables raised to the same powers).</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Simplify: 3x + 5x - 2x + 7</p>
+                            <p>Combine like terms: 3x + 5x - 2x + 7 = 6x + 7</p>
+                        </div>
+                        
+                        <h3>Key Concepts to Remember</h3>
+                        <ul>
+                            <li>Like terms have the same variables with the same exponents</li>
+                            <li>The distributive property: a(b + c) = ab + ac</li>
+                            <li>When adding/subtracting polynomials, combine like terms</li>
+                            <li>When multiplying polynomials, multiply each term in the first polynomial by each term in the second</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="g7-geometry" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Introduction to Geometry</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Basic Geometric Shapes</h3>
+                        <p>Geometry is the study of shapes, sizes, properties, and measurements of figures and spaces. Here are the fundamental shapes:</p>
+                        
+                        <ul>
+                            <li><strong>Point</strong>: Position in space, no dimensions</li>
+                            <li><strong>Line</strong>: Straight path extending infinitely in both directions</li>
+                            <li><strong>Line segment</strong>: Part of a line with two endpoints</li>
+                            <li><strong>Ray</strong>: Part of a line with one endpoint, extending infinitely in one direction</li>
+                            <li><strong>Angle</strong>: Formed by two rays with a common endpoint (vertex)</li>
+                        </ul>
+                        
+                        <h3>Angles</h3>
+                        <p>Angles are measured in degrees (°) or radians.</p>
+                        
+                        <ul>
+                            <li><strong>Acute angle</strong>: Less than 90°</li>
+                            <li><strong>Right angle</strong>: Exactly 90°</li>
+                            <li><strong>Obtuse angle</strong>: Greater than 90° but less than 180°</li>
+                            <li><strong>Straight angle</strong>: Exactly 180°</li>
+                            <li><strong>Reflex angle</strong>: Greater than 180° but less than 360°</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Sum of angles in a triangle = 180°</p>
+                            <p>Sum of angles in a quadrilateral = 360°</p>
+                        </div>
+                        
+                        <h3>Triangles</h3>
+                        <p>A triangle is a polygon with three sides and three angles.</p>
+                        
+                        <ul>
+                            <li><strong>Equilateral triangle</strong>: All sides and angles are equal (60° each)</li>
+                            <li><strong>Isosceles triangle</strong>: Two sides and two angles are equal</li>
+                            <li><strong>Scalene triangle</strong>: All sides and angles are different</li>
+                            <li><strong>Right triangle</strong>: Contains one right angle (90°)</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Area of a triangle = (1/2) × base × height</p>
+                            <p>Perimeter of a triangle = sum of all sides</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Find the area of a triangle with base 6 cm and height 8 cm.</p>
+                            <p>Area = (1/2) × 6 cm × 8 cm = 24 cm²</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g7-statistics" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Basic Statistics</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Data Collection and Representation</h3>
+                        <p>Statistics is the study of collecting, analyzing, interpreting, and presenting data. Data can be represented in various forms:</p>
+                        
+                        <ul>
+                            <li><strong>Tables</strong>: Organized arrangement of data in rows and columns</li>
+                            <li><strong>Bar graphs</strong>: Rectangular bars proportional to the values they represent</li>
+                            <li><strong>Line graphs</strong>: Points connected by straight lines, showing trends over time</li>
+                            <li><strong>Pie charts</strong>: Circular chart divided into sectors, each representing a proportion</li>
+                            <li><strong>Histograms</strong>: Bar graphs showing frequency distributions</li>
+                        </ul>
+                        
+                        <h3>Measures of Central Tendency</h3>
+                        <p>Measures that describe the center or middle of a data set:</p>
+                        
+                        <div class="formula">
+                            <p><strong>Mean</strong>: Sum of all values divided by the number of values</p>
+                            <p>Mean = (x₁ + x₂ + ... + xₙ) / n</p>
+                            <p><strong>Median</strong>: Middle value when data is arranged in order</p>
+                            <p><strong>Mode</strong>: Value that appears most frequently</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Find the mean, median, and mode of: 5, 8, 3, 8, 4</p>
+                            <p>Mean = (5 + 8 + 3 + 8 + 4) / 5 = 28 / 5 = 5.6</p>
+                            <p>Arranged in order: 3, 4, 5, 8, 8</p>
+                            <p>Median = 5</p>
+                            <p>Mode = 8 (appears twice)</p>
+                        </div>
+                        
+                        <h3>Range and Spread</h3>
+                        <p>The range is a measure of the spread or dispersion of a data set.</p>
+                        
+                        <div class="formula">
+                            <p>Range = Maximum value - Minimum value</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Find the range of: 5, 8, 3, 8, 4</p>
+                            <p>Maximum = 8, Minimum = 3</p>
+                            <p>Range = 8 - 3 = 5</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g7-fractions" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Advanced Fractions</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Complex Fraction Operations</h3>
+                        <p>Advanced fraction operations involve combining multiple operations and working with complex fractions (fractions within fractions).</p>
+                        
+                        <div class="formula">
+                            <p>To simplify a complex fraction: Convert both numerator and denominator to a single fraction, then divide the numerator by the denominator.</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Simplify: (2/3 + 1/4) ÷ (5/6 - 1/3)</p>
+                            <p>Step 1: Simplify the numerator: 2/3 + 1/4 = 8/12 + 3/12 = 11/12</p>
+                            <p>Step 2: Simplify the denominator: 5/6 - 1/3 = 5/6 - 2/6 = 3/6 = 1/2</p>
+                            <p>Step 3: Divide: (11/12) ÷ (1/2) = 11/12 × 2/1 = 22/12 = 11/6</p>
+                        </div>
+                        
+                        <h3>Applications of Fractions</h3>
+                        <p>Fractions are used in various real-world situations:</p>
+                        
+                        <ul>
+                            <li>Cooking and recipes (e.g., 3/4 cup of flour)</li>
+                            <li>Time measurements (e.g., 1/4 of an hour = 15 minutes)</li>
+                            <li>Probability (e.g., the probability of getting heads is 1/2)</li>
+                            <li>Surveys and statistics (e.g., 2/5 of respondents agreed)</li>
+                        </ul>
+                        
+                        <h3>Converting Between Fractions, Decimals, and Percentages</h3>
+                        <p>Being able to convert between these formats is essential for many math problems.</p>
+                        
+                        <div class="formula">
+                            <p>Fraction to decimal: Divide numerator by denominator</p>
+                            <p>Decimal to fraction: Write as numerator over power of 10, then simplify</p>
+                            <p>Fraction to percentage: Convert to decimal, then multiply by 100</p>
+                            <p>Percentage to fraction: Divide by 100, then simplify</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Examples:</h4>
+                            <p>3/4 as a decimal: 3 ÷ 4 = 0.75</p>
+                            <p>0.125 as a fraction: 0.125 = 125/1000 = 1/8</p>
+                            <p>2/5 as a percentage: 2/5 = 0.4 = 40%</p>
+                            <p>65% as a fraction: 65% = 65/100 = 13/20</p>
+                        </div>
+                        
+                        <h3>Practice Problems</h3>
+                        <p>Try these advanced fraction problems:</p>
+                        
+                        <ol>
+                            <li>Simplify: (1/2 + 1/3) ÷ (1/4 - 1/8)</li>
+                            <li>Convert 7/11 to a decimal and percentage</li>
+                            <li>If 3/8 of students in a class of 40 are boys, how many girls are there?</li>
+                            <li>Simplify: (2/3)² × (3/4)³ ÷ (1/2)</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Solutions:</h4>
+                            <p>1. (1/2 + 1/3) ÷ (1/4 - 1/8) = (3/6 + 2/6) ÷ (2/8 - 1/8) = 5/6 ÷ 1/8 = 5/6 × 8/1 = 40/6 = 6⅔</p>
+                            <p>2. 7/11 = 0.636... = 63.64%</p>
+                            <p>3. Boys = 3/8 × 40 = 15, Girls = 40 - 15 = 25</p>
+                            <p>4. (2/3)² × (3/4)³ ÷ (1/2) = 4/9 × 27/64 × 2/1 = 216/576 = 3/8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade8" class="grade-content">
+                <h2>Grade 8 Math Notes</h2>
+                
+                <div id="g8-equations" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Linear Equations</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Solving One-Step Equations</h3>
+                        <p>A one-step equation can be solved using a single operation (addition, subtraction, multiplication, or division).</p>
+                        
+                        <div class="formula">
+                            <p>To solve: x + a = b, subtract a from both sides: x = b - a</p>
+                            <p>To solve: x - a = b, add a to both sides: x = b + a</p>
+                            <p>To solve: ax = b, divide both sides by a: x = b/a</p>
+                            <p>To solve: x/a = b, multiply both sides by a: x = ab</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Examples:</h4>
+                            <p>x + 5 = 12 → x = 12 - 5 = 7</p>
+                            <p>x - 3 = 9 → x = 9 + 3 = 12</p>
+                            <p>3x = 15 → x = 15 ÷ 3 = 5</p>
+                            <p>x/4 = 6 → x = 6 × 4 = 24</p>
+                        </div>
+                        
+                        <h3>Solving Multi-Step Equations</h3>
+                        <p>Multi-step equations require several operations to isolate the variable.</p>
+                        
+                        <p>General steps for solving:</p>
+                        <ol>
+                            <li>Simplify both sides (combine like terms, distribute)</li>
+                            <li>Move all variable terms to one side</li>
+                            <li>Move all constant terms to the other side</li>
+                            <li>Combine like terms</li>
+                            <li>Isolate the variable by dividing both sides by its coefficient</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Solve: 3(x - 2) + 4 = 2x + 7</p>
+                            <p>1. Distribute: 3x - 6 + 4 = 2x + 7</p>
+                            <p>2. Combine like terms: 3x - 2 = 2x + 7</p>
+                            <p>3. Subtract 2x from both sides: 3x - 2x - 2 = 2x - 2x + 7</p>
+                            <p>4. Simplify: x - 2 = 7</p>
+                            <p>5. Add 2 to both sides: x = 9</p>
+                        </div>
+                        
+                        <h3>Word Problems with Linear Equations</h3>
+                        <p>Steps for solving word problems:</p>
+                        <ol>
+                            <li>Define the variable (what are you trying to find?)</li>
+                            <li>Write an equation representing the problem</li>
+                            <li>Solve the equation</li>
+                            <li>Check your answer in the context of the problem</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A number plus 15 is equal to twice the number minus 3. Find the number.</p>
+                            <p>1. Let x = the number</p>
+                            <p>2. Write the equation: x + 15 = 2x - 3</p>
+                            <p>3. Solve for x: x + 15 = 2x - 3</p>
+                            <p>Subtract x from both sides: 15 = x - 3</p>
+                            <p>Add 3 to both sides: 18 = x</p>
+                            <p>4. Check: 18 + 15 = 33 and 2(18) - 3 = 36 - 3 = 33 ✓</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 8 study notes would go here -->
+            </div>
+
+            <div id="grade9" class="grade-content">
+                <h2>Grade 9 Math Notes</h2>
+                
+                <div id="g9-quadratic" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Quadratic Equations</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Standard Form and Key Features</h3>
+                        <p>A quadratic equation has the standard form ax² + bx + c = 0, where a, b, and c are constants and a ≠ 0.</p>
+                        
+                        <div class="formula">
+                            <p>Quadratic Function: f(x) = ax² + bx + c</p>
+                            <p>Vertex Form: f(x) = a(x - h)² + k, where (h, k) is the vertex</p>
+                            <p>Factored Form: f(x) = a(x - r₁)(x - r₂), where r₁ and r₂ are the roots</p>
+                        </div>
+                        
+                        <p>Key features of a quadratic function:</p>
+                        <ul>
+                            <li><strong>Vertex</strong>: The highest or lowest point on the parabola, occurs at x = -b/(2a)</li>
+                            <li><strong>Axis of symmetry</strong>: The vertical line passing through the vertex, x = -b/(2a)</li>
+                            <li><strong>y-intercept</strong>: The point where the parabola crosses the y-axis, (0, c)</li>
+                            <li><strong>x-intercepts/roots</strong>: The points where the parabola crosses the x-axis, found by solving ax² + bx + c = 0</li>
+                        </ul>
+                        
+                        <h3>Solving Quadratic Equations</h3>
+                        <p>There are several methods to solve quadratic equations:</p>
+                        
+                        <ol>
+                            <li><strong>Factoring</strong>: If ax² + bx + c can be factored as a(x - r₁)(x - r₂) = 0, then x = r₁ or x = r₂</li>
+                            <li><strong>Square Root Method</strong>: If ax² = b, then x = ±√(b/a)</li>
+                            <li><strong>Completing the Square</strong>: Rewrite the equation in the form a(x + p)² = q, then solve</li>
+                            <li><strong>Quadratic Formula</strong>: x = (-b ± √(b² - 4ac)) / (2a)</li>
+                        </ol>
+                        
+                        <div class="formula">
+                            <p>Quadratic Formula: x = (-b ± √(b² - 4ac)) / (2a)</p>
+                            <p>Discriminant: b² - 4ac determines the number and type of solutions:</p>
+                            <p>- If b² - 4ac > 0: Two distinct real roots</p>
+                            <p>- If b² - 4ac = 0: One repeated real root</p>
+                            <p>- If b² - 4ac < 0: Two complex conjugate roots</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Solve: 2x² - 7x + 3 = 0</p>
+                            <p>Using the quadratic formula with a = 2, b = -7, c = 3:</p>
+                            <p>x = (-(-7) ± √((-7)² - 4(2)(3))) / (2(2))</p>
+                            <p>x = (7 ± √(49 - 24)) / 4</p>
+                            <p>x = (7 ± √25) / 4</p>
+                            <p>x = (7 ± 5) / 4</p>
+                            <p>x = 3 or x = 1/2</p>
+                        </div>
+                        
+                        <h3>Applications of Quadratic Equations</h3>
+                        <p>Quadratic equations can model various real-world situations:</p>
+                        <ul>
+                            <li>Projectile motion (height of an object over time)</li>
+                            <li>Area and perimeter problems</li>
+                            <li>Revenue and profit functions</li>
+                            <li>Speed, time, and distance relationships</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>A ball is thrown upward from a height of 6 meters with an initial velocity of 15 m/s. The height h (in meters) after t seconds is given by h = -4.9t² + 15t + 6. When will the ball hit the ground?</p>
+                            <p>When the ball hits the ground, h = 0:</p>
+                            <p>0 = -4.9t² + 15t + 6</p>
+                            <p>4.9t² - 15t - 6 = 0</p>
+                            <p>Using the quadratic formula:</p>
+                            <p>t = (15 ± √(15² - 4(4.9)(-6))) / (2(4.9))</p>
+                            <p>t = (15 ± √(225 + 117.6)) / 9.8</p>
+                            <p>t = (15 ± √342.6) / 9.8</p>
+                            <p>t = (15 ± 18.51) / 9.8</p>
+                            <p>t = 3.42 seconds or t = -0.36 seconds</p>
+                            <p>Since we can't have negative time, the ball hits the ground after approximately 3.42 seconds.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More grade 9 study notes would go here -->
+            </div>
+
+            <div id="grade10" class="grade-content">
+                <h2>Grade 10 Math Notes</h2>
+                <!-- Grade 10 study notes would go here -->
+            </div>
+
+            <div id="grade11" class="grade-content">
+                <h2>Grade 11 Math Notes</h2>
+                <!-- Grade 11 study notes would go here -->
+            </div>
+        </div>
+    </section>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="math.html">Mathematics</a></li>
+                            <li><a href="physics.html">Physics</a></li>
+                            <li><a href="chemistry.html">Chemistry</a></li>
+                            <li><a href="biology.html">Biology</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="#" data-target="grade7">Grade 7</a></li>
+                            <li><a href="#" data-target="grade8">Grade 8</a></li>
+                            <li><a href="#" data-target="grade9">Grade 9</a></li>
+                            <li><a href="#" data-target="grade10">Grade 10</a></li>
+                            <li><a href="#" data-target="grade11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../premium/index.html">Premium Content</a></li>
+                            <li><a href="../index.html#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="../index.html#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/subscription.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab Navigation for Grade Levels
+            const tabButtons = document.querySelectorAll('.tab-btn[data-target]');
+            const gradeContents = document.querySelectorAll('.grade-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    gradeContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    const targetId = button.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // Footer grade links
+            const footerGradeLinks = document.querySelectorAll('.footer-column a[data-target]');
+            
+            footerGradeLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    
+                    // Activate the corresponding tab
+                    document.querySelector(`.tab-btn[data-target="${targetId}"]`).click();
+                    
+                    // Scroll to the grade content
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Donation Modal
+            const donateFooter = document.getElementById('donateFooter');
+            if(donateFooter) {
+                donateFooter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('This feature would redirect to a donation page in a real application.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

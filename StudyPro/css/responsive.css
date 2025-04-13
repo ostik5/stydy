@@ -1,0 +1,149 @@
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow-md);
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .main-nav li {
+        margin: var(--spacing-sm) 0;
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        padding-left: var(--spacing-lg);
+        min-width: auto;
+        display: none;
+    }
+
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: var(--spacing-xs) 0;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: var(--font-md);
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .features, .subject-grid, .grade-materials, .favorites-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-logo {
+        margin-bottom: var(--spacing-lg);
+        text-align: center;
+    }
+
+    .footer-logo h2 {
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: space-around;
+    }
+
+    .plan {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 576px) {
+    h2 {
+        font-size: var(--font-xl);
+    }
+
+    .features, .subject-grid, .grade-materials, .favorites-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .donation-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .footer-column {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: var(--spacing-lg);
+    }
+
+    .subscription-plans {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Small height devices */
+@media (max-height: 600px) {
+    .hero {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-content {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .modal-content {
+        margin: 5vh auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}

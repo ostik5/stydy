@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry - Study Notes Hub</title>
+    <meta name="description" content="Comprehensive chemistry study notes and cheat sheets for grades 7-11. Learn chemical reactions, periodic table, and more.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Subject-specific styles */
+        .subject-header {
+            background: linear-gradient(rgba(156, 63, 63, 0.9), rgba(156, 63, 63, 0.8)), url('https://source.unsplash.com/random/1200x600/?chemistry') no-repeat center center/cover;
+            color: #fff;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .study-note {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .study-note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .study-note-header h2 {
+            color: var(--chemistry-color);
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .study-note-content {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .formula {
+            background-color: #f0f4f8;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--chemistry-color);
+            margin: var(--spacing-md) 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .example h4 {
+            color: var(--chemistry-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .bookmark-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-lg);
+            color: var(--chemistry-color);
+        }
+        
+        .pdf-download-container {
+            text-align: right;
+            margin-top: var(--spacing-md);
+        }
+        
+        .pdf-download-btn {
+            font-size: var(--font-sm);
+        }
+        
+        .premium-locked {
+            position: relative;
+            background-color: #f0f0f0;
+            color: #888;
+        }
+        
+        .premium-locked:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .premium-locked .fa-crown {
+            color: var(--premium-color);
+            margin-left: var(--spacing-xs);
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .notification {
+            background-color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success i {
+            color: #4caf50;
+        }
+        
+        .notification.error i {
+            color: #f44336;
+        }
+        
+        .notification i {
+            margin-right: var(--spacing-sm);
+            font-size: var(--font-lg);
+        }
+        
+        /* Periodic table styles */
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 2px;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .element {
+            padding: 4px;
+            text-align: center;
+            font-size: 0.7rem;
+            border-radius: 2px;
+        }
+        
+        .element .symbol {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .element .atomic-number {
+            font-size: 0.6rem;
+        }
+        
+        .metal {
+            background-color: #e6f7ff;
+        }
+        
+        .nonmetal {
+            background-color: #ffe6e6;
+        }
+        
+        .metalloid {
+            background-color: #f9ffe6;
+        }
+        
+        .noble-gas {
+            background-color: #e6e6ff;
+        }
+        
+        .alkali-metal {
+            background-color: #ffcccc;
+        }
+        
+        .alkaline-earth {
+            background-color: #ffecd9;
+        }
+        
+        .transition-metal {
+            background-color: #e6f7ff;
+        }
+        
+        .lanthanide {
+            background-color: #f2e6ff;
+        }
+        
+        .actinide {
+            background-color: #ffe6f7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Study Notes Hub</h1>
+                <p>Your Educational Resource Center</p>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Subjects <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="math.html" class="math-color">Mathematics</a></li>
+                            <li><a href="physics.html" class="physics-color">Physics</a></li>
+                            <li><a href="chemistry.html" class="chemistry-color active">Chemistry</a></li>
+                            <li><a href="biology.html" class="biology-color">Biology</a></li>
+                            <li><a href="history.html" class="history-color">History</a></li>
+                            <li><a href="literature.html" class="literature-color">Literature</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#grades">Grades 7-11</a></li>
+                    <li><a href="../premium/index.html">Premium Content</a></li>
+                    <li><a href="#" id="favorites-link"><i class="fas fa-bookmark"></i> Favorites</a></li>
+                </ul>
+                <div class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="subject-header">
+        <div class="container">
+            <h1>Chemistry</h1>
+            <p>Study notes and cheat sheets for chemical reactions, periodic table, and more</p>
+        </div>
+    </div>
+
+    <section class="subject-page">
+        <div class="container">
+            <div class="grade-selector">
+                <h2>Select Grade Level</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="grade7">Grade 7</button>
+                    <button class="tab-btn" data-target="grade8">Grade 8</button>
+                    <button class="tab-btn" data-target="grade9">Grade 9</button>
+                    <button class="tab-btn" data-target="grade10">Grade 10</button>
+                    <button class="tab-btn" data-target="grade11">Grade 11</button>
+                </div>
+            </div>
+
+            <div id="grade7" class="grade-content active">
+                <h2>Grade 7 Chemistry Notes</h2>
+                
+                <div id="g7-matter" class="study-note">
+                    <div class="study-note-header">
+                        <h2>States of Matter</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Matter</h3>
+                        <p>Matter is anything that has mass and takes up space. It is made up of tiny particles called atoms and molecules. Matter exists in three main states: solid, liquid, and gas.</p>
+                        
+                        <h3>Properties of the Three States of Matter</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-md) 0;">
+                            <tr style="background-color: #f0f4f8; font-weight: bold;">
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Property</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Solid</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Liquid</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Gas</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Shape</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Definite</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Takes the shape of container</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Takes the shape of container</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Volume</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Definite</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Definite</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Fills the entire container</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Particle arrangement</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Tightly packed in fixed positions</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Close together but can move around</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Far apart, moving freely</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Particle movement</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Vibrate in place</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Slide past each other</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Move rapidly in all directions</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Density</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Highest</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Medium</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Lowest</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Compressibility</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Very slight</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Slight</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">High</td>
+                            </tr>
+                        </table>
+                        
+                        <h3>Changes of State</h3>
+                        <p>Matter can change from one state to another when energy is added or removed.</p>
+                        
+                        <ul>
+                            <li><strong>Melting</strong>: Solid → Liquid (energy added)</li>
+                            <li><strong>Freezing</strong>: Liquid → Solid (energy removed)</li>
+                            <li><strong>Vaporization/Evaporation</strong>: Liquid → Gas (energy added)</li>
+                            <li><strong>Condensation</strong>: Gas → Liquid (energy removed)</li>
+                            <li><strong>Sublimation</strong>: Solid → Gas (energy added)</li>
+                            <li><strong>Deposition</strong>: Gas → Solid (energy removed)</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>What happens to the particles of water when it changes from a liquid to a gas?</p>
+                            <p>When water changes from a liquid to a gas (vaporization), the water particles gain energy. This causes them to move faster and overcome the attractive forces between them. The particles then spread out and move freely, becoming water vapor.</p>
+                        </div>
+                        
+                        <h3>Physical vs. Chemical Changes</h3>
+                        <p><strong>Physical changes</strong> alter the form of a substance but not its chemical composition. Examples include changes in state, dissolving, and physical deformation.</p>
+                        <p><strong>Chemical changes</strong> involve the formation of new substances with different properties. Signs of chemical changes include color change, gas production, energy change (heat/light), and precipitate formation.</p>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Classify the following as physical or chemical changes:</p>
+                            <ol>
+                                <li>Melting ice cream - <strong>Physical change</strong> (state change)</li>
+                                <li>Rusting of iron - <strong>Chemical change</strong> (new substance formed)</li>
+                                <li>Dissolving sugar in water - <strong>Physical change</strong> (sugar can be recovered by evaporation)</li>
+                                <li>Burning of paper - <strong>Chemical change</strong> (creates ash, smoke, and heat)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade8" class="grade-content">
+                <h2>Grade 8 Chemistry Notes</h2>
+                
+                <div id="g8-elements" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Elements and Compounds</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Elements</h3>
+                        <p>An element is a pure substance that cannot be broken down into simpler substances by chemical means. Each element consists of only one type of atom and has unique properties.</p>
+                        
+                        <p>Elements are organized in the periodic table based on their properties and atomic structure.</p>
+                        
+                        <h3>The Periodic Table</h3>
+                        <p>The periodic table arranges elements according to their atomic number (number of protons) and groups them based on similar properties.</p>
+                        
+                        <ul>
+                            <li><strong>Periods (rows)</strong>: Elements in the same period have the same number of electron shells.</li>
+                            <li><strong>Groups (columns)</strong>: Elements in the same group have similar chemical properties and the same number of electrons in their outer shell.</li>
+                        </ul>
+                        
+                        <h3>Atoms and Their Structure</h3>
+                        <p>Atoms are the basic building blocks of matter. They consist of:</p>
+                        
+                        <ul>
+                            <li><strong>Protons</strong>: Positively charged particles in the nucleus</li>
+                            <li><strong>Neutrons</strong>: Neutral particles in the nucleus</li>
+                            <li><strong>Electrons</strong>: Negatively charged particles orbiting the nucleus in energy levels or shells</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Atomic Number = Number of Protons</p>
+                            <p>Mass Number = Number of Protons + Number of Neutrons</p>
+                            <p>Number of Electrons = Number of Protons (in a neutral atom)</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>The element oxygen has 8 protons and 8 neutrons. What is its atomic number and mass number?</p>
+                            <p>Atomic Number = 8 (number of protons)</p>
+                            <p>Mass Number = 8 + 8 = 16 (protons + neutrons)</p>
+                        </div>
+                        
+                        <h3>Compounds</h3>
+                        <p>A compound is a substance formed when two or more elements are chemically combined in a fixed ratio. The properties of compounds are different from those of their constituent elements.</p>
+                        
+                        <h3>Chemical Formulas</h3>
+                        <p>Chemical formulas show the elements present in a compound and their relative numbers.</p>
+                        
+                        <div class="example">
+                            <h4>Examples:</h4>
+                            <p>H<sub>2</sub>O (water): 2 hydrogen atoms and 1 oxygen atom</p>
+                            <p>CO<sub>2</sub> (carbon dioxide): 1 carbon atom and 2 oxygen atoms</p>
+                            <p>NaCl (table salt): 1 sodium atom and 1 chlorine atom</p>
+                        </div>
+                        
+                        <h3>Mixtures vs. Pure Substances</h3>
+                        <p>A <strong>pure substance</strong> has a fixed composition and properties. It can be an element or a compound.</p>
+                        <p>A <strong>mixture</strong> contains two or more substances that are physically combined but not chemically bonded. The components can be separated by physical means.</p>
+                        
+                        <ul>
+                            <li><strong>Homogeneous mixtures</strong> (solutions) have uniform composition throughout.</li>
+                            <li><strong>Heterogeneous mixtures</strong> have visibly different parts with different compositions.</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Examples:</h4>
+                            <p>Pure substances: Gold (element), Water (compound)</p>
+                            <p>Homogeneous mixtures: Salt water, Air</p>
+                            <p>Heterogeneous mixtures: Soil, Oil and water, Salad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade9" class="grade-content">
+                <h2>Grade 9 Chemistry Notes</h2>
+                
+                <div id="g9-reactions" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Chemical Reactions</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Chemical Reactions</h3>
+                        <p>A chemical reaction is a process where substances (reactants) are transformed into different substances (products) through the breaking and forming of chemical bonds.</p>
+                        
+                        <div class="formula">
+                            <p>Reactants → Products</p>
+                        </div>
+                        
+                        <h3>Signs of Chemical Reactions</h3>
+                        <ul>
+                            <li>Color change</li>
+                            <li>Production of a gas (bubbling)</li>
+                            <li>Formation of a precipitate (solid)</li>
+                            <li>Temperature change (heat absorbed or released)</li>
+                            <li>Light emission</li>
+                        </ul>
+                        
+                        <h3>Balancing Chemical Equations</h3>
+                        <p>In a chemical equation, the number of atoms of each element must be the same on both sides (conservation of mass).</p>
+                        
+                        <p>Steps to balance an equation:</p>
+                        <ol>
+                            <li>Count the number of atoms of each element on both sides</li>
+                            <li>Add coefficients (numbers in front of formulas) to balance the atoms</li>
+                            <li>Start with the most complex formula</li>
+                            <li>Check that all atoms are balanced</li>
+                        </ol>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Balance the equation: H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O</p>
+                            <p>Count atoms: Left side has 2 H and 2 O. Right side has 2 H and 1 O.</p>
+                            <p>Oxygen is not balanced. Add coefficient 2 to H<sub>2</sub>O:</p>
+                            <p>H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O</p>
+                            <p>Now count again: Left side has 2 H and 2 O. Right side has 4 H and 2 O.</p>
+                            <p>Hydrogen is not balanced. Add coefficient 2 to H<sub>2</sub>:</p>
+                            <p>2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O</p>
+                            <p>Final count: Left side has 4 H and 2 O. Right side has 4 H and 2 O. The equation is balanced.</p>
+                        </div>
+                        
+                        <h3>Types of Chemical Reactions</h3>
+                        <ul>
+                            <li><strong>Synthesis (Combination)</strong>: A + B → AB</li>
+                            <li><strong>Decomposition</strong>: AB → A + B</li>
+                            <li><strong>Single Replacement</strong>: A + BC → AC + B</li>
+                            <li><strong>Double Replacement</strong>: AB + CD → AD + CB</li>
+                            <li><strong>Combustion</strong>: Fuel + Oxygen → Carbon dioxide + Water</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Examples:</h4>
+                            <p>Synthesis: 2Na + Cl<sub>2</sub> → 2NaCl</p>
+                            <p>Decomposition: 2H<sub>2</sub>O → 2H<sub>2</sub> + O<sub>2</sub></p>
+                            <p>Single Replacement: Zn + 2HCl → ZnCl<sub>2</sub> + H<sub>2</sub></p>
+                            <p>Double Replacement: AgNO<sub>3</sub> + NaCl → AgCl + NaNO<sub>3</sub></p>
+                            <p>Combustion: CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O</p>
+                        </div>
+                        
+                        <h3>Factors Affecting Reaction Rate</h3>
+                        <ul>
+                            <li><strong>Temperature</strong>: Higher temperature usually increases reaction rate</li>
+                            <li><strong>Concentration</strong>: Higher concentration of reactants usually increases reaction rate</li>
+                            <li><strong>Surface Area</strong>: Greater surface area (smaller particles) increases reaction rate</li>
+                            <li><strong>Catalysts</strong>: Substances that increase reaction rate without being consumed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade10" class="grade-content">
+                <h2>Grade 10 Chemistry Notes</h2>
+                
+                <div id="g10-organic" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Introduction to Organic Chemistry</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>What is Organic Chemistry?</h3>
+                        <p>Organic chemistry is the study of carbon-containing compounds, their properties, and reactions. Most organic compounds contain carbon and hydrogen, and many also contain oxygen, nitrogen, and other elements.</p>
+                        
+                        <h3>Hydrocarbons</h3>
+                        <p>Hydrocarbons are compounds containing only carbon and hydrogen. They are classified based on their structure:</p>
+                        
+                        <ul>
+                            <li><strong>Alkanes</strong>: Single bonds only (saturated)</li>
+                            <li><strong>Alkenes</strong>: Contain at least one carbon-carbon double bond</li>
+                            <li><strong>Alkynes</strong>: Contain at least one carbon-carbon triple bond</li>
+                            <li><strong>Aromatic</strong>: Contain benzene rings or similar structures</li>
+                        </ul>
+                        
+                        <h3>Alkanes</h3>
+                        <p>Alkanes have the general formula C<sub>n</sub>H<sub>2n+2</sub>. The first 10 alkanes are:</p>
+                        
+                        <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-md) 0;">
+                            <tr style="background-color: #f0f4f8; font-weight: bold;">
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Name</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Formula</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Carbon Atoms</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Methane</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">CH<sub>4</sub></td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">1</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Ethane</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">C<sub>2</sub>H<sub>6</sub></td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">2</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Propane</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">C<sub>3</sub>H<sub>8</sub></td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">3</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Butane</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">C<sub>4</sub>H<sub>10</sub></td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">4</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">Pentane</td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">C<sub>5</sub>H<sub>12</sub></td>
+                                <td style="border: 1px solid var(--border-color); padding: var(--spacing-sm);">5</td>
+                            </tr>
+                        </table>
+                        
+                        <h3>Functional Groups</h3>
+                        <p>Functional groups are specific atoms or groups of atoms that give organic compounds their characteristic chemical properties.</p>
+                        
+                        <ul>
+                            <li><strong>Alcohols (-OH)</strong>: Contain a hydroxyl group, e.g., ethanol (C<sub>2</sub>H<sub>5</sub>OH)</li>
+                            <li><strong>Carboxylic acids (-COOH)</strong>: Contain a carboxyl group, e.g., acetic acid (CH<sub>3</sub>COOH)</li>
+                            <li><strong>Aldehydes (-CHO)</strong>: Contain a formyl group, e.g., formaldehyde (HCHO)</li>
+                            <li><strong>Ketones (-CO-)</strong>: Contain a carbonyl group between carbon atoms, e.g., acetone (CH<sub>3</sub>COCH<sub>3</sub>)</li>
+                            <li><strong>Esters (-COO-)</strong>: Formed from alcohols and carboxylic acids, e.g., ethyl acetate (CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>)</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Identify the functional group in C<sub>2</sub>H<sub>5</sub>OH.</p>
+                            <p>The -OH group is a hydroxyl group, making this compound an alcohol (ethanol).</p>
+                        </div>
+                        
+                        <h3>Isomerism</h3>
+                        <p>Isomers are compounds with the same molecular formula but different structural arrangements.</p>
+                        
+                        <ul>
+                            <li><strong>Structural isomers</strong>: Different connectivity of atoms</li>
+                            <li><strong>Stereoisomers</strong>: Same connectivity but different spatial arrangement</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Butane (C<sub>4</sub>H<sub>10</sub>) has two structural isomers:</p>
+                            <p>1. n-butane: CH<sub>3</sub>-CH<sub>2</sub>-CH<sub>2</sub>-CH<sub>3</sub> (straight chain)</p>
+                            <p>2. isobutane: CH<sub>3</sub>-CH(CH<sub>3</sub>)-CH<sub>3</sub> (branched chain)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="g10-solutions" class="study-note premium-only-content hidden">
+                    <div class="study-note-header">
+                        <h2>Chemical Solutions</h2>
+                        <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>What is a Solution?</h3>
+                        <p>A solution is a homogeneous mixture of two or more substances. The substance that dissolves is called the solute, and the substance it dissolves in is called the solvent.</p>
+                        
+                        <h3>Types of Solutions</h3>
+                        <ul>
+                            <li><strong>Solid in liquid</strong>: Salt in water</li>
+                            <li><strong>Liquid in liquid</strong>: Alcohol in water</li>
+                            <li><strong>Gas in liquid</strong>: Carbon dioxide in water (carbonated drinks)</li>
+                            <li><strong>Gas in gas</strong>: Air (oxygen, nitrogen, etc.)</li>
+                            <li><strong>Solid in solid</strong>: Alloys (brass, bronze)</li>
+                        </ul>
+                        
+                        <h3>Concentration of Solutions</h3>
+                        <p>The concentration of a solution expresses the amount of solute in a given amount of solution or solvent.</p>
+                        
+                        <div class="formula">
+                            <p><strong>Mass percent</strong>: (mass of solute ÷ mass of solution) × 100%</p>
+                            <p><strong>Molarity (M)</strong>: moles of solute ÷ liters of solution</p>
+                            <p><strong>Molality (m)</strong>: moles of solute ÷ kilograms of solvent</p>
+                            <p><strong>Parts per million (ppm)</strong>: (mass of solute ÷ mass of solution) × 10<sup>6</sup></p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the molarity of a solution made by dissolving 5.85 g of NaCl in enough water to form 500 mL of solution.</p>
+                            <p>Step 1: Convert mass to moles</p>
+                            <p>Molar mass of NaCl = 23.0 g/mol (Na) + 35.5 g/mol (Cl) = 58.5 g/mol</p>
+                            <p>Moles of NaCl = 5.85 g ÷ 58.5 g/mol = 0.1 mol</p>
+                            <p>Step 2: Calculate molarity</p>
+                            <p>Volume of solution = 500 mL = 0.5 L</p>
+                            <p>Molarity = moles of solute ÷ liters of solution = 0.1 mol ÷ 0.5 L = 0.2 M</p>
+                        </div>
+                        
+                        <h3>Solubility</h3>
+                        <p>Solubility is the maximum amount of solute that can dissolve in a given amount of solvent at a specific temperature.</p>
+                        
+                        <ul>
+                            <li><strong>Saturated solution</strong>: Contains the maximum amount of dissolved solute</li>
+                            <li><strong>Unsaturated solution</strong>: Can dissolve more solute</li>
+                            <li><strong>Supersaturated solution</strong>: Contains more dissolved solute than a saturated solution (unstable)</li>
+                        </ul>
+                        
+                        <h3>Factors Affecting Solubility</h3>
+                        <ul>
+                            <li><strong>Temperature</strong>: Most solid solutes become more soluble as temperature increases. Gases generally become less soluble as temperature increases.</li>
+                            <li><strong>Pressure</strong>: The solubility of gases increases with increasing pressure (Henry's Law).</li>
+                            <li><strong>Nature of solute and solvent</strong>: "Like dissolves like" - polar solutes dissolve in polar solvents, nonpolar solutes dissolve in nonpolar solvents.</li>
+                        </ul>
+                        
+                        <h3>Colligative Properties</h3>
+                        <p>Colligative properties depend on the number of solute particles, not their identity.</p>
+                        
+                        <ul>
+                            <li><strong>Vapor pressure lowering</strong>: Adding solute decreases the vapor pressure of the solvent</li>
+                            <li><strong>Boiling point elevation</strong>: Solutions have higher boiling points than pure solvents</li>
+                            <li><strong>Freezing point depression</strong>: Solutions have lower freezing points than pure solvents</li>
+                            <li><strong>Osmotic pressure</strong>: Pressure required to prevent osmosis across a semipermeable membrane</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>Boiling point elevation: ΔT<sub>b</sub> = K<sub>b</sub> × m</p>
+                            <p>Freezing point depression: ΔT<sub>f</sub> = K<sub>f</sub> × m</p>
+                            <p>where:</p>
+                            <p>ΔT = change in temperature</p>
+                            <p>K<sub>b</sub>, K<sub>f</sub> = constants specific to the solvent</p>
+                            <p>m = molality of solution</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the freezing point of a solution containing 30.0 g of glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) dissolved in 500 g of water. The freezing point constant (K<sub>f</sub>) for water is 1.86°C/m.</p>
+                            <p>Step 1: Calculate the molality</p>
+                            <p>Molar mass of glucose = 180.0 g/mol</p>
+                            <p>Moles of glucose = 30.0 g ÷ 180.0 g/mol = 0.167 mol</p>
+                            <p>Molality = moles of solute ÷ kg of solvent = 0.167 mol ÷ 0.500 kg = 0.334 m</p>
+                            <p>Step 2: Calculate the freezing point depression</p>
+                            <p>ΔT<sub>f</sub> = K<sub>f</sub> × m = 1.86°C/m × 0.334 m = 0.62°C</p>
+                            <p>Step 3: Calculate the freezing point</p>
+                            <p>Freezing point = 0°C - 0.62°C = -0.62°C</p>
+                        </div>
+                        
+                        <h3>Electrolytes and Nonelectrolytes</h3>
+                        <ul>
+                            <li><strong>Electrolytes</strong>: Substances that dissociate into ions in solution and conduct electricity (e.g., NaCl, HCl)</li>
+                            <li><strong>Nonelectrolytes</strong>: Substances that do not dissociate into ions and do not conduct electricity (e.g., sugar, alcohol)</li>
+                        </ul>
+                        
+                        <h3>Acid-Base Solutions</h3>
+                        <ul>
+                            <li><strong>Acids</strong>: Proton (H<sup>+</sup>) donors, pH < 7</li>
+                            <li><strong>Bases</strong>: Proton acceptors or hydroxide (OH<sup>-</sup>) donors, pH > 7</li>
+                            <li><strong>Neutralization</strong>: Acid + Base → Salt + Water</li>
+                        </ul>
+                        
+                        <div class="formula">
+                            <p>pH = -log[H<sup>+</sup>]</p>
+                            <p>pOH = -log[OH<sup>-</sup>]</p>
+                            <p>pH + pOH = 14 (at 25°C)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="grade11" class="grade-content">
+                <h2>Grade 11 Chemistry Notes</h2>
+                
+                <div id="g11-equilibrium" class="study-note">
+                    <div class="study-note-header">
+                        <h2>Chemical Equilibrium</h2>
+                    </div>
+                    <div class="study-note-content">
+                        <h3>Introduction to Chemical Equilibrium</h3>
+                        <p>Chemical equilibrium is a state in which the rates of the forward and reverse reactions are equal, resulting in constant concentrations of reactants and products.</p>
+                        
+                        <div class="formula">
+                            <p>For a general reaction: aA + bB ⇌ cC + dD</p>
+                            <p>The equilibrium constant expression is:</p>
+                            <p>K<sub>c</sub> = [C]<sup>c</sup>[D]<sup>d</sup> / [A]<sup>a</sup>[B]<sup>b</sup></p>
+                            <p>where [A], [B], [C], and [D] are the molar concentrations at equilibrium.</p>
+                        </div>
+                        
+                        <h3>Interpreting Equilibrium Constants</h3>
+                        <ul>
+                            <li>K<sub>c</sub> >> 1: Reaction favors products (equilibrium lies to the right)</li>
+                            <li>K<sub>c</sub> << 1: Reaction favors reactants (equilibrium lies to the left)</li>
+                            <li>K<sub>c</sub> ≈ 1: Significant amounts of both reactants and products are present</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>For the reaction 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g), the equilibrium concentrations are [SO<sub>2</sub>] = 0.2 M, [O<sub>2</sub>] = 0.1 M, and [SO<sub>3</sub>] = 0.4 M. Calculate K<sub>c</sub>.</p>
+                            <p>K<sub>c</sub> = [SO<sub>3</sub>]<sup>2</sup> / [SO<sub>2</sub>]<sup>2</sup>[O<sub>2</sub>]</p>
+                            <p>K<sub>c</sub> = (0.4)<sup>2</sup> / (0.2)<sup>2</sup>(0.1)</p>
+                            <p>K<sub>c</sub> = 0.16 / 0.004</p>
+                            <p>K<sub>c</sub> = 40</p>
+                            <p>Since K<sub>c</sub> > 1, the reaction favors the formation of products.</p>
+                        </div>
+                        
+                        <h3>Le Chatelier's Principle</h3>
+                        <p>Le Chatelier's principle states that when a system at equilibrium is subjected to a change, the system will shift in a direction that counteracts the change.</p>
+                        
+                        <p>Effects of various changes:</p>
+                        <ul>
+                            <li><strong>Concentration:</strong> Adding a reactant or removing a product shifts the equilibrium to the right (towards products). Adding a product or removing a reactant shifts the equilibrium to the left (towards reactants).</li>
+                            <li><strong>Pressure/Volume (for gas reactions):</strong> Increasing pressure (or decreasing volume) shifts the equilibrium towards the side with fewer gas molecules. Decreasing pressure (or increasing volume) shifts the equilibrium towards the side with more gas molecules.</li>
+                            <li><strong>Temperature:</strong> For exothermic reactions (ΔH < 0), increasing temperature shifts the equilibrium to the left. For endothermic reactions (ΔH > 0), increasing temperature shifts the equilibrium to the right.</li>
+                            <li><strong>Catalysts:</strong> Do not affect the position of equilibrium but help the system reach equilibrium faster.</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Consider the equilibrium: N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g) + heat</p>
+                            <p>Predict the effect of each change:</p>
+                            <ol>
+                                <li>Adding more N<sub>2</sub>: Equilibrium shifts right (towards products)</li>
+                                <li>Removing H<sub>2</sub>: Equilibrium shifts left (towards reactants)</li>
+                                <li>Increasing pressure: Equilibrium shifts right (4 gas molecules → 2 gas molecules)</li>
+                                <li>Increasing temperature: Equilibrium shifts left (reaction is exothermic)</li>
+                            </ol>
+                        </div>
+                        
+                        <h3>Equilibrium in Acid-Base Reactions</h3>
+                        <p>The ionization of weak acids and bases in water establishes equilibria.</p>
+                        
+                        <div class="formula">
+                            <p>For a weak acid HA: HA + H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + A<sup>-</sup></p>
+                            <p>K<sub>a</sub> = [H<sub>3</sub>O<sup>+</sup>][A<sup>-</sup>] / [HA]</p>
+                            <p>For a weak base B: B + H<sub>2</sub>O ⇌ BH<sup>+</sup> + OH<sup>-</sup></p>
+                            <p>K<sub>b</sub> = [BH<sup>+</sup>][OH<sup>-</sup>] / [B]</p>
+                        </div>
+                        
+                        <p>The stronger the acid or base, the larger its K<sub>a</sub> or K<sub>b</sub> value.</p>
+                        
+                        <h3>Buffer Solutions</h3>
+                        <p>Buffer solutions resist changes in pH when small amounts of acid or base are added. They consist of a weak acid and its conjugate base, or a weak base and its conjugate acid.</p>
+                        
+                        <div class="formula">
+                            <p>Henderson-Hasselbalch equation: pH = pK<sub>a</sub> + log([A<sup>-</sup>] / [HA])</p>
+                        </div>
+                        
+                        <div class="example">
+                            <h4>Example:</h4>
+                            <p>Calculate the pH of a buffer solution containing 0.1 M acetic acid (HC<sub>2</sub>H<sub>3</sub>O<sub>2</sub>) and 0.2 M sodium acetate (NaC<sub>2</sub>H<sub>3</sub>O<sub>2</sub>). The K<sub>a</sub> of acetic acid is 1.8 × 10<sup>-5</sup>.</p>
+                            <p>pK<sub>a</sub> = -log(1.8 × 10<sup>-5</sup>) = 4.74</p>
+                            <p>pH = 4.74 + log(0.2 / 0.1) = 4.74 + log(2) = 4.74 + 0.30 = 5.04</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Premium Content</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p class="price">₴150 <span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="monthly">Subscribe</button>
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Best Value</div>
+                    <h3>Yearly</h3>
+                    <p class="price">₴1200 <span>/year</span></p>
+                    <p class="save">Save ₴600</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All premium content</li>
+                        <li><i class="fas fa-check"></i> PDF downloads</li>
+                        <li><i class="fas fa-check"></i> Advanced exercises</li>
+                        <li><i class="fas fa-check"></i> Exam prep material</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-plan="yearly">Subscribe</button>
+                </div>
+            </div>
+            <div class="subscription-message success hidden">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You now have access to all premium content.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Study Notes Hub</h2>
+                    <p>Your Educational Resource Center</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Subjects</h3>
+                        <ul>
+                            <li><a href="math.html">Mathematics</a></li>
+                            <li><a href="physics.html">Physics</a></li>
+                            <li><a href="chemistry.html">Chemistry</a></li>
+                            <li><a href="biology.html">Biology</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="literature.html">Literature</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Grade Levels</h3>
+                        <ul>
+                            <li><a href="#" data-target="grade7">Grade 7</a></li>
+                            <li><a href="#" data-target="grade8">Grade 8</a></li>
+                            <li><a href="#" data-target="grade9">Grade 9</a></li>
+                            <li><a href="#" data-target="grade10">Grade 10</a></li>
+                            <li><a href="#" data-target="grade11">Grade 11</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../premium/index.html">Premium Content</a></li>
+                            <li><a href="../index.html#favorites">Your Favorites</a></li>
+                            <li><a href="#" id="donateFooter">Donate</a></li>
+                            <li><a href="../index.html#about">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Study Notes Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/subscription.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab Navigation for Grade Levels
+            const tabButtons = document.querySelectorAll('.tab-btn[data-target]');
+            const gradeContents = document.querySelectorAll('.grade-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    gradeContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    const targetId = button.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // Footer grade links
+            const footerGradeLinks = document.querySelectorAll('.footer-column a[data-target]');
+            
+            footerGradeLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    
+                    // Activate the corresponding tab
+                    document.querySelector(`.tab-btn[data-target="${targetId}"]`).click();
+                    
+                    // Scroll to the grade content
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Donation Modal
+            const donateFooter = document.getElementById('donateFooter');
+            if(donateFooter) {
+                donateFooter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('This feature would redirect to a donation page in a real application.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
